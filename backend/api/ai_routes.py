@@ -1,4 +1,5 @@
 import asyncio
+import json
 from uuid import uuid4
 from dataclasses import dataclass
 from fastapi import APIRouter, Depends, File, HTTPException, Request, UploadFile
@@ -22,6 +23,8 @@ from ai.model_backend import UnderwritingModelBackend, UnavailableUnderwritingBa
 from ai.underwriting_schemas import Principal
 from ai.underwriting_analysis import UnderwritingAnalysisService
 from ai.intelligence_schemas import UnderwritingAnalysis
+from ai.exposure_mapping import map_to_exposure_schema
+from ai.nzoia_model import NzoiaCatModelBackend, SUPPORTED_PERIODS, nzoia_exposure_contract
 
 
 @dataclass
@@ -40,8 +43,9 @@ def build_services(settings: Settings, llm: LLMClient | None = None, flood_model
     client = llm if llm is not None else create_llm_client(settings)
     analyzer = RiskAnalyzer(flood_model if flood_model is not None else UnavailableFloodModel(), mapper if mapper is not None else CanonicalExposureMapper(), timeout_seconds=settings.agent_tool_timeout_seconds)
     repository = store if store is not None else AssessmentStore(settings.storage_directory)
+    actual_backend = model_backend if model_backend is not None else NzoiaCatModelBackend(repository, settings)
     agent = Agent(client, settings.max_tool_rounds, max_tool_calls=settings.max_agent_tool_calls, llm_timeout_seconds=settings.llm_timeout_seconds, chat_timeout_seconds=settings.agent_chat_timeout_seconds)
-    return AIServices(settings, repository, DocumentParser(settings), ExtractionService(client), agent, analyzer, model_backend if model_backend is not None else UnavailableUnderwritingBackend(), authorizer if authorizer is not None else OwnershipAuthorizer(repository))
+    return AIServices(settings, repository, DocumentParser(settings), ExtractionService(client), agent, analyzer, actual_backend, authorizer if authorizer is not None else OwnershipAuthorizer(repository))
 
 
 def get_services(request: Request) -> AIServices:
@@ -137,6 +141,39 @@ async def extract(assessment_id: str, services: AIServices = Depends(get_service
     if not result.assets and not result.claims:
         warnings.append('No source-backed assets or claims were extracted; assessment information remains incomplete')
     return ResponseEnvelope(status="partial" if warnings else "success", assessment_id=assessment_id, data=result, warnings=warnings)
+
+
+@router.post('/assessments/{assessment_id}/prepare-model', response_model=ResponseEnvelope[dict[str, object]])
+async def prepare_model(assessment_id: str, services: AIServices = Depends(get_services)):
+    """Map an uploaded exposure schedule and run supported deterministic scenarios."""
+    documents = await asyncio.to_thread(services.store.documents, assessment_id)
+    rows = []
+    for document in documents.values():
+        for segment in document.segments:
+            try:
+                value = json.loads(segment.text)
+            except (TypeError, json.JSONDecodeError):
+                continue
+            if isinstance(value, dict):
+                rows.append(value)
+    if not rows:
+        return ResponseEnvelope(status='partial', assessment_id=assessment_id,
+            data={'model_readiness': 'unavailable', 'model_output': None},
+            warnings=['No row-based exposure schedule was uploaded; document intelligence remains available.'])
+    mapping = await asyncio.to_thread(map_to_exposure_schema, rows, contract=nzoia_exposure_contract(), settings=services.settings)
+    snapshot = await asyncio.to_thread(services.store.dashboard_snapshot, assessment_id)
+    await asyncio.to_thread(services.store.save_exposure_mapping, assessment_id, mapping, source_hash=snapshot['source_hash'])
+    output = None
+    warnings = list(mapping.warnings)
+    if mapping.model_readiness == 'ready':
+        output = await services.model_backend.run_flood_model(assessment_id, list(SUPPORTED_PERIODS))
+    else:
+        warnings.append('Loss calculation requires every model record to pass exposure validation.')
+    return ResponseEnvelope(status='success' if output else 'partial', assessment_id=assessment_id,
+        data={'model_readiness': mapping.model_readiness,
+              'valid_records': len(mapping.valid_records),
+              'review_required_records': len(mapping.review_required_records),
+              'model_output': output.model_dump(mode='json') if output else None}, warnings=warnings)
 
 
 @router.post("/assessments/{assessment_id}/chat", response_model=ResponseEnvelope[AIAnalysis])
