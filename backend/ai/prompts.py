@@ -99,6 +99,8 @@ probability statistics, return periods, counts, rankings or spelled-out quantiti
 any explanation or recommendation: the server renders all source facts and calculations.
 Do not mention building numbers; refer to the selected finding instead. Each summary
 explanation is one concise sentence without multiple sentence terminators.
+Do not paraphrase or repeat the underlying offer wording. Explain the underwriting
+implication, the decision it affects, or the verification needed to proceed.
 Distinguish historical observations, document-reported conditions, actual model outputs
 and data-quality findings. Historical claim totals are not future predictions. Never
 assign a risk grade, premium, AAL, EAL, exceedance probability or return period yourself.

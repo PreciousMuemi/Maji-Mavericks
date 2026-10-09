@@ -297,19 +297,18 @@ class UnderwritingAnalysisService:
         sentences = []
         for item in narrative.summary[:3]:
             fact = known[item.finding_id]
-            # Source facts and numerals are server-controlled. Use one compact sentence
-            # per selection; document text punctuation cannot create extra sentences.
-            fragment = re.sub(r'(?<!\d)[.!?]|[.!?](?!\d)', ';', fact.statement)
-            fragment = re.sub(r'\s+', ' ', fragment).strip('; ')
-            if len(fragment) > 220:
-                fragment = fragment[:220].rsplit(' ', 1)[0].rstrip('; ')
-            sentences.append(f'{fragment}; {item.explanation.rstrip(".!?")}.')
+            # Keep the briefing interpretive. Detailed source facts remain available
+            # through the cited finding instead of being copied into the summary.
+            title = re.sub(r'(?<!\d)[.!?]|[.!?](?!\d)', '', fact.title).strip()
+            sentences.append(f'{title}: {item.explanation.rstrip(".!?")}.')
         actions = [RecommendedAction(action=item.action, rationale=item.rationale, origin='independent_analysis', citation_ids=known[item.finding_id].citation_ids) for item in narrative.actions]
         actions.extend(proposals)
         # Missing information must remain visible even if the LLM does not select it.
         for item in limitations:
             if item.citation_ids and item.code in {'missing_coordinates', 'missing_insured_value', 'missing_building_model_inputs', 'not_provided', 'document_contradiction', 'financial_overlap_unverified', 'coverage_ambiguity', 'model_unavailable', 'missing_hazard_coverage', 'hazard_coverage_unverified', 'no_model_results', 'vulnerability_assumptions_unverified'}:
                 actions.append(RecommendedAction(action='Verify or obtain the referenced information before relying on model or coverage conclusions.', rationale=item.message, origin='independent_analysis', citation_ids=item.citation_ids))
+        actions = list({(item.action.casefold(), item.rationale.casefold(), item.origin): item
+                        for item in actions}.values())
         return UnderwritingAnalysis(risk_summary=' '.join(sentences), risk_level=RiskLevel(source='No approved risk-rating framework output is available'), top_risk_drivers=drivers, historical_claims_findings=history, model_findings=model_findings, recommended_actions=actions, limitations=limitations, citations=list(citations.values()))
 
     @staticmethod
