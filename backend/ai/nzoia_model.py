@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from threading import RLock
 from typing import Any
@@ -33,6 +33,7 @@ INDUSTRIAL_CURVE = ((0, 0), (.5, .06), (1, .25), (1.5, .40), (2, .49),
                     (3, .68), (4, .92), (5, 1), (6, 1))
 HOUSING_CLASSES = ('informal_iron_sheet', 'semi_permanent',
                    'permanent_masonry', 'concrete_rcc')
+KES_CENT = Decimal('0.01')
 
 
 class FinancialTerms(StrictModel):
@@ -148,10 +149,11 @@ class NzoiaCatModelBackend:
             for record, raw_depth in zip(records, sampled):
                 depth = 0.0 if np.ma.is_masked(raw_depth) or (nodata is not None and raw_depth == nodata) else float(raw_depth)
                 ratio = damage_ratio(depth)
-                loss = Decimal(str(record['tiv_kes'])) * ratio
+                loss = (Decimal(str(record['tiv_kes'])) * ratio).quantize(KES_CENT, rounding=ROUND_HALF_UP)
                 payable = max(loss - terms.per_risk_deductible_kes, Decimal('0'))
                 if terms.per_risk_limit_kes is not None:
                     payable = min(payable, terms.per_risk_limit_kes)
+                payable = payable.quantize(KES_CENT, rounding=ROUND_HALF_UP)
                 per_risk.append(loss)
                 building_losses.append(BuildingLoss(loc_id=str(record['loc_id']), loss=payable,
                                                     housing_class=str(record['housing_class'])))
