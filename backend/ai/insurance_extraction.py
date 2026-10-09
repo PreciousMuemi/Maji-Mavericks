@@ -15,7 +15,8 @@ from .document_parser import DocumentError, DocumentParser
 from .extraction_service import ExtractionError
 from .insurance_schemas import (
     Contradiction, ContradictionAudit, Coordinates, DocumentClassification, Fact, InsuranceDocumentResult,
-    InsuranceFacts, Interpretation, Measurement, Money, ReviewItem,
+    InsuranceFacts, InsuranceFinancialTerms, InsuranceHistoryRisk, InsuranceIdentityAssets,
+    Interpretation, Measurement, Money, ReviewItem,
 )
 from .llm_client import LLMClient, create_llm_client
 from .prompts import INSURANCE_CLASSIFICATION_SYSTEM, INSURANCE_EXTRACTION_SYSTEM, INSURANCE_CONTRADICTION_SYSTEM
@@ -349,6 +350,29 @@ class InsuranceDocumentExtractor:
             reviews.append(ReviewItem(code='ingestion_limitation', field_path='document', message=warning))
         return reviews, contradictions
 
+    async def _extract_section_facts(self, payload: str) -> InsuranceFacts:
+        if not getattr(self.llm, 'requires_split_insurance_schema', False):
+            return InsuranceFacts.model_validate(
+                await self.llm.structured(INSURANCE_EXTRACTION_SYSTEM, payload, InsuranceFacts))
+
+        identity, financial, history = await asyncio.gather(
+            self.llm.structured(INSURANCE_EXTRACTION_SYSTEM, payload, InsuranceIdentityAssets),
+            self.llm.structured(INSURANCE_EXTRACTION_SYSTEM, payload, InsuranceFinancialTerms),
+            self.llm.structured(INSURANCE_EXTRACTION_SYSTEM, payload, InsuranceHistoryRisk),
+        )
+        identity = InsuranceIdentityAssets.model_validate(identity)
+        financial = InsuranceFinancialTerms.model_validate(financial)
+        history = InsuranceHistoryRisk.model_validate(history)
+        return InsuranceFacts(
+            insured=identity.insured,
+            assets=identity.assets,
+            financial_exposure=financial.financial_exposure,
+            insurance_terms=financial.insurance_terms,
+            flood_history=history.flood_history,
+            risk_factors=history.risk_factors,
+            document_recommendations=history.document_recommendations,
+        )
+
     async def extract_document(self, document: ParsedDocument) -> InsuranceDocumentResult:
         if not document.segments:
             raise ExtractionError('Document has no extractable text')
@@ -373,7 +397,7 @@ class InsuranceDocumentExtractor:
         merged = InsuranceFacts()
         for section in self._sections(document):
             payload = json.dumps({'document_type': classification.kind, 'section': section.model_dump(mode='json')}, ensure_ascii=False)
-            facts = InsuranceFacts.model_validate(await self.llm.structured(INSURANCE_EXTRACTION_SYSTEM, payload, InsuranceFacts))
+            facts = await self._extract_section_facts(payload)
             self._validate_facts(facts, section)
             merged = self._merge(merged, facts)
         # Revalidate after deterministic reconciliation, then collect review work.

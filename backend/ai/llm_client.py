@@ -31,6 +31,33 @@ def _provider_schema(model: type[BaseModel]) -> dict[str, Any]:
     return schema
 
 
+def _anthropic_schema(model: type[BaseModel]) -> dict[str, Any]:
+    """Convert Pydantic constraints to Anthropic's supported JSON Schema subset.
+
+    Claude constrains the response shape. The original Pydantic model validates
+    every constraint after generation, so removing unsupported grammar keywords
+    here cannot cause an invalid result to be accepted.
+    """
+    schema = _provider_schema(model)
+    unsupported = {
+        'minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum', 'multipleOf',
+        'minLength', 'maxLength', 'minItems', 'maxItems', 'uniqueItems',
+    }
+
+    def visit(value: Any) -> None:
+        if isinstance(value, dict):
+            for key in unsupported:
+                value.pop(key, None)
+            for child in value.values():
+                visit(child)
+        elif isinstance(value, list):
+            for child in value:
+                visit(child)
+
+    visit(schema)
+    return schema
+
+
 class LLMUnavailable(RuntimeError):
     pass
 
@@ -120,6 +147,7 @@ class OpenRouterClient(OpenAIClient):
 
 class AnthropicClient:
     """Direct Claude adapter with native structured output and client tools."""
+    requires_split_insurance_schema = True
     def __init__(self, settings: Settings):
         from anthropic import AsyncAnthropic
         if not settings.anthropic_api_key:
@@ -133,21 +161,79 @@ class AnthropicClient:
         self.max_output_tokens = settings.llm_max_output_tokens
 
     async def structured(self, system, user, schema):
-        result = await self.client.messages.create(
-            model=self.model,
-            max_tokens=self.max_output_tokens,
-            system=system,
-            messages=[{'role': 'user', 'content': user}],
-            output_config={'format': {
-                'type': 'json_schema',
-                'schema': _provider_schema(schema),
-            }},
-        )
+        provider_schema = _anthropic_schema(schema)
+        try:
+            result = await self.client.messages.create(
+                model=self.model,
+                max_tokens=self.max_output_tokens,
+                system=system,
+                messages=[{'role': 'user', 'content': user}],
+                output_config={'format': {
+                    'type': 'json_schema',
+                    'schema': provider_schema,
+                }},
+            )
+        except Exception as exc:
+            # Anthropic refuses compiled grammars above an internal size limit.
+            # Large extraction models still undergo the original strict local
+            # validation and downstream evidence validation before acceptance.
+            message = str(exc).casefold()
+            if getattr(exc, 'status_code', None) != 400 or 'grammar is too large' not in message:
+                raise
+            result = await self.client.messages.create(
+                model=self.model,
+                max_tokens=self.max_output_tokens,
+                system=(f'{system}\n\nReturn only one JSON object. Do not use Markdown fences. '
+                        'The application will reject any value that does not match the supplied schema.'),
+                messages=[{'role': 'user', 'content': (
+                    f'{user}\n\nJSON Schema:\n{json.dumps(provider_schema, ensure_ascii=False)}')}],
+            )
         content = ''.join(block.text for block in result.content
                           if getattr(block, 'type', None) == 'text')
         if not content.strip():
             raise ValueError('Anthropic did not return schema-valid output')
-        return schema.model_validate_json(content)
+        def validate(raw: str):
+            # Be tolerant only of a surrounding Markdown fence; the decoded
+            # object is still checked by the exact Pydantic model below.
+            stripped = raw.strip()
+            if stripped.startswith('```') and stripped.endswith('```'):
+                stripped = stripped[3:-3].strip()
+                if stripped.casefold().startswith('json'):
+                    stripped = stripped[4:].lstrip()
+            return schema.model_validate_json(stripped)
+
+        for repair_attempt in range(3):
+            validation_error = None
+            try:
+                return validate(content)
+            except Exception as exc:
+                if repair_attempt == 2:
+                    raise
+                validation_error = exc
+            raw_errors = getattr(validation_error, 'errors', lambda **_: [])(include_input=False)
+            if not raw_errors:
+                raise
+            errors = [{key: item.get(key) for key in ('type', 'loc', 'msg')}
+                      for item in raw_errors]
+            repair = await self.client.messages.create(
+                model=self.model,
+                max_tokens=self.max_output_tokens,
+                system=(f'{system}\n\nReturn only one corrected JSON object without Markdown. '
+                        'Use JSON numbers for numeric fields. Do not add unsupported facts.'),
+                messages=[
+                    {'role': 'user', 'content': (
+                        f'{user}\n\nJSON Schema:\n{json.dumps(provider_schema, ensure_ascii=False)}')},
+                    {'role': 'assistant', 'content': content},
+                    {'role': 'user', 'content': (
+                        'Correct the preceding JSON in place. Preserve its source-backed facts, '
+                        'but fix every listed type or schema violation. Qualifiers such as '
+                        '"approximately" belong in uncertainty metadata; numeric value fields '
+                        'must contain only JSON numbers. Return the complete corrected object.\n\n'
+                        f'Validation errors:\n{json.dumps(errors, ensure_ascii=False)}')},
+                ],
+            )
+            content = ''.join(block.text for block in repair.content
+                              if getattr(block, 'type', None) == 'text')
 
     @staticmethod
     def _messages(messages):

@@ -2,8 +2,9 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
+from pydantic import BaseModel, Field
 from ai.config import Settings
-from ai.llm_client import AnthropicClient, GeminiClient, OpenAIClient, OpenRouterClient, UnconfiguredClient, _provider_schema, create_llm_client
+from ai.llm_client import AnthropicClient, GeminiClient, OpenAIClient, OpenRouterClient, UnconfiguredClient, _anthropic_schema, _provider_schema, create_llm_client
 from ai.schemas import DocumentExtraction
 from ai.insurance_schemas import InsuranceFacts
 
@@ -129,6 +130,74 @@ async def test_anthropic_structured_output_and_tool_translation():
     assert create.call_args.kwargs['tools'][0]['input_schema'] == {'type': 'object'}
 
 
+@pytest.mark.asyncio
+async def test_anthropic_falls_back_when_compiled_grammar_is_too_large():
+    client = AnthropicClient.__new__(AnthropicClient)
+    client.model = 'claude-test'
+    client.max_output_tokens = 32768
+
+    class GrammarTooLarge(Exception):
+        status_code = 400
+
+    create = AsyncMock(side_effect=[
+        GrammarTooLarge('The compiled grammar is too large'),
+        SimpleNamespace(content=[SimpleNamespace(
+            type='text', text=f'```json\n{DocumentExtraction().model_dump_json()}\n```')]),
+    ])
+    client.client = SimpleNamespace(messages=SimpleNamespace(create=create))
+
+    result = await client.structured('system', 'document', DocumentExtraction)
+
+    assert result == DocumentExtraction()
+    assert create.await_count == 2
+    assert 'output_config' not in create.call_args_list[1].kwargs
+
+
+@pytest.mark.asyncio
+async def test_anthropic_repairs_invalid_unconstrained_json():
+    class NumericResult(BaseModel):
+        value: int = Field(ge=0)
+
+    client = AnthropicClient.__new__(AnthropicClient)
+    client.model = 'claude-test'
+    client.max_output_tokens = 32768
+
+    class GrammarTooLarge(Exception):
+        status_code = 400
+
+    create = AsyncMock(side_effect=[
+        GrammarTooLarge('The compiled grammar is too large'),
+        SimpleNamespace(content=[SimpleNamespace(type='text', text='{"value":"approximately 5"}')]),
+        SimpleNamespace(content=[SimpleNamespace(type='text', text='{"value":5}')]),
+    ])
+    client.client = SimpleNamespace(messages=SimpleNamespace(create=create))
+
+    result = await client.structured('system', 'document', NumericResult)
+
+    assert result.value == 5
+    assert create.await_count == 3
+
+
+@pytest.mark.asyncio
+async def test_anthropic_repairs_cross_field_validation_after_native_output():
+    class PairedResult(BaseModel):
+        value: int
+
+    client = AnthropicClient.__new__(AnthropicClient)
+    client.model = 'claude-test'
+    client.max_output_tokens = 32768
+    create = AsyncMock(side_effect=[
+        SimpleNamespace(content=[SimpleNamespace(type='text', text='{"value":"five"}')]),
+        SimpleNamespace(content=[SimpleNamespace(type='text', text='{"value":5}')]),
+    ])
+    client.client = SimpleNamespace(messages=SimpleNamespace(create=create))
+
+    result = await client.structured('system', 'document', PairedResult)
+
+    assert result.value == 5
+    assert create.await_count == 2
+
+
 def test_anthropic_replays_tool_results_in_native_message_blocks():
     system, messages = AnthropicClient._messages([
         {'role': 'system', 'content': 'policy'},
@@ -141,6 +210,14 @@ def test_anthropic_replays_tool_results_in_native_message_blocks():
     assert messages[0]['content'][0]['type'] == 'tool_use'
     assert messages[1]['content'][0]['type'] == 'tool_result'
     assert messages[1]['content'][0]['tool_use_id'] == 'tool1'
+
+
+def test_anthropic_schema_removes_unsupported_constraints_but_local_model_keeps_them():
+    schema = _anthropic_schema(DocumentExtraction)
+    encoded = str(schema)
+    assert 'minLength' not in encoded
+    assert 'minimum' not in encoded
+    assert DocumentExtraction.model_json_schema() != schema
 
 
 def test_anthropic_factory_uses_current_haiku_by_default():

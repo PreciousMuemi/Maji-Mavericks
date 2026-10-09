@@ -189,6 +189,22 @@ class InsuranceFacts(StrictModel):
     document_recommendations: list[DocumentRecommendation] = Field(default_factory=list)
 
 
+class InsuranceIdentityAssets(StrictModel):
+    insured: InsuredDetails = Field(default_factory=InsuredDetails)
+    assets: list[InsuranceAsset] = Field(default_factory=list)
+
+
+class InsuranceFinancialTerms(StrictModel):
+    financial_exposure: FinancialExposure = Field(default_factory=FinancialExposure)
+    insurance_terms: InsuranceTerms = Field(default_factory=InsuranceTerms)
+
+
+class InsuranceHistoryRisk(StrictModel):
+    flood_history: list[FloodEvent] = Field(default_factory=list)
+    risk_factors: RiskFactors = Field(default_factory=RiskFactors)
+    document_recommendations: list[DocumentRecommendation] = Field(default_factory=list)
+
+
 class DocumentClassification(StrictModel):
     kind: Literal['insurance_offer', 'reinsurance_offer', 'exposure_schedule', 'policy', 'claims_report', 'mixed', 'unknown']
     confidence: float = Field(ge=0, le=1, allow_inf_nan=False)
