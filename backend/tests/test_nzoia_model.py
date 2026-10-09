@@ -2,6 +2,7 @@ from decimal import Decimal
 from pathlib import Path
 
 import pytest
+from fastapi.testclient import TestClient
 
 from ai.config import Settings
 from ai.exposure_mapping import map_to_exposure_schema
@@ -9,6 +10,7 @@ from ai.nzoia_model import (FinancialTerms, NzoiaCatModelBackend,
                             apply_financial_terms, damage_ratio,
                             nzoia_exposure_contract)
 from ai.store import AssessmentStore
+from app.main import create_app
 
 
 def test_jrc_curve_interpolation_and_financial_order():
@@ -50,3 +52,26 @@ async def test_supplied_nzoia_portfolio_runs_real_rasters(tmp_path):
     assert output.period_results[0].currency == 'KES'
     assert output.model_version
     store.close()
+
+
+def test_upload_pipeline_maps_samples_and_returns_rankable_results(tmp_path):
+    root = Path(__file__).parents[2]
+    settings = Settings(_env_file=None, storage_directory=str(tmp_path),
+                        dataset_directory=str(root / 'datasets'))
+    source = root / 'datasets/data/team_b_nzoia/exposure_nzoia_synthetic.csv'
+    with TestClient(create_app(settings)) as client:
+        assessment = client.post('/api/ai/assessments').json()['data']['assessment_id']
+        with source.open('rb') as stream:
+            uploaded = client.post(f'/api/ai/assessments/{assessment}/documents',
+                                   files={'file': ('exposure.csv', stream, 'text/csv')})
+        assert uploaded.status_code == 201
+
+        prepared = client.post(f'/api/ai/assessments/{assessment}/prepare-model')
+
+    assert prepared.status_code == 200
+    payload = prepared.json()['data']
+    assert payload['model_readiness'] == 'ready'
+    assert payload['valid_records'] == 500
+    assert payload['review_required_records'] == 0
+    assert payload['missing_model_inputs'] == []
+    assert len(payload['model_output']['period_results']) == 6

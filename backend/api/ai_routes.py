@@ -23,7 +23,7 @@ from ai.model_backend import UnderwritingModelBackend, UnavailableUnderwritingBa
 from ai.underwriting_schemas import Principal
 from ai.underwriting_analysis import UnderwritingAnalysisService
 from ai.intelligence_schemas import UnderwritingAnalysis
-from ai.exposure_mapping import map_to_exposure_schema
+from ai.exposure_mapping import get_missing_model_inputs, map_to_exposure_schema
 from ai.nzoia_model import NzoiaCatModelBackend, SUPPORTED_PERIODS, nzoia_exposure_contract
 
 
@@ -156,13 +156,29 @@ async def prepare_model(assessment_id: str, services: AIServices = Depends(get_s
                 continue
             if isinstance(value, dict):
                 rows.append(value)
-    if not rows:
-        return ResponseEnvelope(status='partial', assessment_id=assessment_id,
-            data={'model_readiness': 'unavailable', 'model_output': None},
-            warnings=['No row-based exposure schedule was uploaded; document intelligence remains available.'])
-    mapping = await asyncio.to_thread(map_to_exposure_schema, rows, contract=nzoia_exposure_contract(), settings=services.settings)
+    contract = nzoia_exposure_contract()
+    if rows:
+        mapping = await asyncio.to_thread(map_to_exposure_schema, rows, contract=contract, settings=services.settings)
+    else:
+        extracted = await asyncio.to_thread(services.store.insurance_results, assessment_id)
+        if not extracted:
+            return ResponseEnvelope(status='partial', assessment_id=assessment_id,
+                data={'model_readiness': 'unavailable', 'valid_records': 0,
+                      'review_required_records': 0, 'missing_model_inputs': [],
+                      'model_output': None},
+                warnings=['Validated insurance facts are required before exposure mapping.'])
+        # The normal upload flow produces one rich result per document. Multiple
+        # schedules require an explicit portfolio merge decision to avoid duplicates.
+        if len(extracted) > 1:
+            return ResponseEnvelope(status='partial', assessment_id=assessment_id,
+                data={'model_readiness': 'unavailable', 'valid_records': 0,
+                      'review_required_records': 0, 'missing_model_inputs': [],
+                      'model_output': None},
+                warnings=['Multiple extracted documents require an explicit portfolio merge decision.'])
+        mapping = await asyncio.to_thread(map_to_exposure_schema, extracted[0], contract=contract, settings=services.settings)
     snapshot = await asyncio.to_thread(services.store.dashboard_snapshot, assessment_id)
     await asyncio.to_thread(services.store.save_exposure_mapping, assessment_id, mapping, source_hash=snapshot['source_hash'])
+    missing = await asyncio.to_thread(get_missing_model_inputs, mapping, contract=contract)
     output = None
     warnings = list(mapping.warnings)
     if mapping.model_readiness == 'ready':
@@ -173,6 +189,7 @@ async def prepare_model(assessment_id: str, services: AIServices = Depends(get_s
         data={'model_readiness': mapping.model_readiness,
               'valid_records': len(mapping.valid_records),
               'review_required_records': len(mapping.review_required_records),
+              'missing_model_inputs': [item.model_dump(mode='json') for item in missing],
               'model_output': output.model_dump(mode='json') if output else None}, warnings=warnings)
 
 
