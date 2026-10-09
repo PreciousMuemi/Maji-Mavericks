@@ -1,0 +1,1418 @@
+{
+  "status": "success",
+  "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+  "data": {
+    "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+    "status": "calculation_completed",
+    "statuses": [
+      "document_extracted",
+      "model_ready",
+      "calculation_completed"
+    ],
+    "kpis": [
+      {
+        "id": "property_sum_insured",
+        "label": "Property sum insured",
+        "value": "10000",
+        "display_value": "KES 10,000.00",
+        "availability": "available",
+        "basis": "document_reported",
+        "currency": "KES",
+        "citation_ids": [
+          "doc.f4507f4cc7e42338"
+        ],
+        "note": "Explicit document-reported amount; separate financial categories are not added."
+      },
+      {
+        "id": "requested_flood_limit",
+        "label": "Requested flood limit (proposed)",
+        "value": "2000",
+        "display_value": "KES 2,000.00",
+        "availability": "available",
+        "basis": "document_reported",
+        "currency": "KES",
+        "citation_ids": [
+          "doc.588a1d4da6717416"
+        ],
+        "note": "Explicit document-reported amount; separate financial categories are not added."
+      },
+      {
+        "id": "historical_flood_claims",
+        "label": "Historical flood claims (claimed; KES only)",
+        "value": "400",
+        "display_value": "KES 400.00",
+        "availability": "available",
+        "basis": "historical",
+        "currency": "KES",
+        "citation_ids": [
+          "calc.historical.document_history.claimed.KES",
+          "doc.e4f358e469f30483",
+          "doc.f0b6e6ddac9d81ad"
+        ],
+        "note": "Available documented amounts only; claimed, settled and paid streams remain separate. Past losses are not forecasts."
+      },
+      {
+        "id": "number_of_assets",
+        "label": "Documented buildings",
+        "value": "2",
+        "display_value": "2",
+        "availability": "available",
+        "basis": "document_reported",
+        "currency": null,
+        "citation_ids": [
+          "dashboard.asset_count.812ca1a02b412e44fef4",
+          "doc.ba784b3fb2191291",
+          "doc.8746476dc76e714b"
+        ],
+        "note": null
+      },
+      {
+        "id": "rp100_modelled_loss",
+        "label": "RP100 modelled flood loss",
+        "value": "500",
+        "display_value": "KES 500.00",
+        "availability": "available",
+        "basis": "modelled",
+        "currency": "KES",
+        "citation_ids": [
+          "model.synthetic-adapter-response"
+        ],
+        "note": "Actual stored catastrophe-model result; not a historical claim total."
+      },
+      {
+        "id": "assessment_status",
+        "label": "Assessment status",
+        "value": "calculation_completed",
+        "display_value": "Calculation completed",
+        "availability": "available",
+        "basis": "workflow",
+        "currency": null,
+        "citation_ids": [],
+        "note": null
+      }
+    ],
+    "charts": [
+      {
+        "id": "historical_flood_claims_by_year",
+        "type": "bar",
+        "title": "Documented historical flood claims by year (claimed; KES only)",
+        "x_label": "Historical event year",
+        "y_label": "Documented amount (KES)",
+        "basis": "historical",
+        "unit": "KES",
+        "points": [
+          {
+            "label": "2019",
+            "value": "100",
+            "display_value": "KES 100.00",
+            "citation_ids": [
+              "dashboard.historical_year.2019.94b84c1df13bf5d7a3ee",
+              "doc.e4f358e469f30483"
+            ]
+          },
+          {
+            "label": "2020",
+            "value": "300",
+            "display_value": "KES 300.00",
+            "citation_ids": [
+              "dashboard.historical_year.2020.8c4b88ffa5efa6bae4ca",
+              "doc.f0b6e6ddac9d81ad"
+            ]
+          }
+        ],
+        "note": "Available evidenced events only; no missing years filled with zero. This is historical experience, not a prediction.",
+        "return_period": null
+      },
+      {
+        "id": "exposure_by_construction_class",
+        "type": "bar",
+        "title": "Validated building exposure by supported construction class",
+        "x_label": "Supported construction class",
+        "y_label": "Building insured values (KES)",
+        "basis": "validated_exposure",
+        "unit": "KES",
+        "points": [
+          {
+            "label": "TEST_ONLY_CLASS",
+            "value": "3000",
+            "display_value": "KES 3,000.00",
+            "citation_ids": [
+              "dashboard.exposure_class.b27d95d465b2584a9351",
+              "doc.bd47c92880bc57a3",
+              "doc.c07ebc07fe7d9fee"
+            ]
+          }
+        ],
+        "note": "Only validated building records; review-required rows and machinery, inventory, contents and interruption are excluded. No overall property sum is allocated.",
+        "return_period": null
+      },
+      {
+        "id": "inventory_breakdown",
+        "type": "bar",
+        "title": "Document-reported inventory breakdown",
+        "x_label": "Inventory item",
+        "y_label": "Reported item value (KES)",
+        "basis": "document_reported",
+        "unit": "KES",
+        "points": [
+          {
+            "label": "Raw materials",
+            "value": "1500",
+            "display_value": "KES 1,500.00",
+            "citation_ids": [
+              "doc.6de5a953158d6ec8",
+              "doc.6de5a953158d6ec8",
+              "doc.bf50f3033c602b9f"
+            ]
+          },
+          {
+            "label": "Finished goods",
+            "value": "2500",
+            "display_value": "KES 2,500.00",
+            "citation_ids": [
+              "doc.8063f1cf1fdd24ae",
+              "doc.8063f1cf1fdd24ae",
+              "doc.bf50f3033c602b9f"
+            ]
+          }
+        ],
+        "note": "Explicitly separate reported inventory items; this is exposure, not a modelled inventory loss.",
+        "return_period": null
+      },
+      {
+        "id": "return_period_loss_curve",
+        "type": "line",
+        "title": "Actual modelled flood losses by return period",
+        "x_label": "Return period (years)",
+        "y_label": "Modelled loss (KES)",
+        "basis": "modelled",
+        "unit": "KES",
+        "points": [
+          {
+            "label": "100",
+            "value": "500",
+            "display_value": "KES 500.00",
+            "citation_ids": [
+              "model.synthetic-adapter-response"
+            ]
+          },
+          {
+            "label": "500",
+            "value": "1000",
+            "display_value": "KES 1,000.00",
+            "citation_ids": [
+              "model.synthetic-adapter-response"
+            ]
+          }
+        ],
+        "note": "Reported scenarios only; no interpolation, probability, AAL or missing scenarios inferred.",
+        "return_period": null
+      },
+      {
+        "id": "scenario_comparison",
+        "type": "bar",
+        "title": "Comparison of actual return-period scenarios",
+        "x_label": "Return period (years)",
+        "y_label": "Modelled loss (KES)",
+        "basis": "modelled",
+        "unit": "KES",
+        "points": [
+          {
+            "label": "100",
+            "value": "500",
+            "display_value": "KES 500.00",
+            "citation_ids": [
+              "model.synthetic-adapter-response"
+            ]
+          },
+          {
+            "label": "500",
+            "value": "1000",
+            "display_value": "KES 1,000.00",
+            "citation_ids": [
+              "model.synthetic-adapter-response"
+            ]
+          }
+        ],
+        "note": "Same-currency stored return-period scenario totals; no unexecuted mitigation scenarios are shown.",
+        "return_period": null
+      },
+      {
+        "id": "building_loss_ranking_rp100",
+        "type": "bar",
+        "title": "Modelled building loss ranking — RP100",
+        "x_label": "Backend building ID",
+        "y_label": "Modelled building loss (KES)",
+        "basis": "modelled",
+        "unit": "KES",
+        "points": [
+          {
+            "label": "beta",
+            "value": "400",
+            "display_value": "KES 400.00",
+            "citation_ids": [
+              "dashboard.building_rank.6f007f5c00a214d1c665",
+              "model.synthetic-adapter-response"
+            ]
+          },
+          {
+            "label": "alpha",
+            "value": "100",
+            "display_value": "KES 100.00",
+            "citation_ids": [
+              "dashboard.building_rank.b9ca096f898534537498",
+              "model.synthetic-adapter-response"
+            ]
+          }
+        ],
+        "note": "Ranks only returned building rows; completeness of the modelled building breakdown must be verified.",
+        "return_period": 100
+      },
+      {
+        "id": "building_loss_ranking_rp500",
+        "type": "bar",
+        "title": "Modelled building loss ranking — RP500",
+        "x_label": "Backend building ID",
+        "y_label": "Modelled building loss (KES)",
+        "basis": "modelled",
+        "unit": "KES",
+        "points": [
+          {
+            "label": "beta",
+            "value": "700",
+            "display_value": "KES 700.00",
+            "citation_ids": [
+              "dashboard.building_rank.45cc5d70d41d3606942e",
+              "model.synthetic-adapter-response"
+            ]
+          },
+          {
+            "label": "alpha",
+            "value": "300",
+            "display_value": "KES 300.00",
+            "citation_ids": [
+              "dashboard.building_rank.9453f970ae7a66fa46f6",
+              "model.synthetic-adapter-response"
+            ]
+          }
+        ],
+        "note": "Ranks only returned building rows; completeness of the modelled building breakdown must be verified.",
+        "return_period": 500
+      }
+    ],
+    "map": {
+      "locations": [
+        {
+          "id": "synthetic-dashboard-offer.site",
+          "label": "Synthetic facility",
+          "lat": 0.1,
+          "lon": 34.2,
+          "coordinate_scope": "site",
+          "citation_ids": [
+            "doc.12b1dcac32375300"
+          ]
+        },
+        {
+          "id": "synthetic-dashboard-offer.building.0",
+          "label": "Building Alpha",
+          "lat": 0.1,
+          "lon": 34.2,
+          "coordinate_scope": "building",
+          "citation_ids": [
+            "doc.365200cd36d5d896"
+          ]
+        },
+        {
+          "id": "synthetic-dashboard-offer.building.1",
+          "label": "Building Beta",
+          "lat": 0.11,
+          "lon": 34.21,
+          "coordinate_scope": "building",
+          "citation_ids": [
+            "doc.f2e2b0223b20be6a"
+          ]
+        }
+      ],
+      "coverage_status": "model_results_available",
+      "note": "A site point is not an individual building position. Returned losses do not establish complete spatial hazard coverage; verify extent with the modelling team."
+    },
+    "ai_insights": {
+      "summary": "Document-reported condition: Building Alpha: \"poor\"; The evidence warrants protection and engineering review. Document-reported condition: Building Beta: \"poor\"; The evidence warrants protection and engineering review. Document-reported inventory values: KES 4,000.00; no financial categories have been added together; The evidence warrants protection and engineering review.",
+      "origin": "stored_ai_analysis",
+      "risk_drivers": [
+        {
+          "id": "document.0.facts.assets[0].condition",
+          "title": "condition: Building Alpha",
+          "statement": "Document-reported condition: Building Alpha: \"poor\"",
+          "evidence_type": "document_reported",
+          "citation_ids": [
+            "doc.ba784b3fb2191291"
+          ],
+          "numerical_findings": [],
+          "why_it_matters": "This can affect asset resilience and continuity of operations"
+        },
+        {
+          "id": "document.0.facts.assets[1].condition",
+          "title": "condition: Building Beta",
+          "statement": "Document-reported condition: Building Beta: \"poor\"",
+          "evidence_type": "document_reported",
+          "citation_ids": [
+            "doc.8746476dc76e714b"
+          ],
+          "numerical_findings": [],
+          "why_it_matters": "This can affect asset resilience and continuity of operations"
+        },
+        {
+          "id": "document.0.facts.financial_exposure.inventory_values",
+          "title": "inventory values",
+          "statement": "Document-reported inventory values: KES 4,000.00; no financial categories have been added together.",
+          "evidence_type": "document_reported",
+          "citation_ids": [
+            "doc.2fab9a0e119119f6"
+          ],
+          "numerical_findings": [
+            {
+              "metric": "inventory_values",
+              "value": "4000",
+              "unit": "KES",
+              "citation_id": "doc.2fab9a0e119119f6"
+            }
+          ],
+          "why_it_matters": "This can affect asset resilience and continuity of operations"
+        }
+      ],
+      "recommendations": [
+        {
+          "action": "Arrange a targeted engineering inspection and verify mitigation completion",
+          "rationale": "Confirm the documented condition and suitability of proposed protections",
+          "origin": "independent_analysis",
+          "citation_ids": [
+            "doc.ba784b3fb2191291"
+          ]
+        },
+        {
+          "action": "Arrange a targeted engineering inspection and verify mitigation completion",
+          "rationale": "Confirm the documented condition and suitability of proposed protections",
+          "origin": "independent_analysis",
+          "citation_ids": [
+            "doc.8746476dc76e714b"
+          ]
+        },
+        {
+          "action": "Arrange a targeted engineering inspection and verify mitigation completion",
+          "rationale": "Confirm the documented condition and suitability of proposed protections",
+          "origin": "independent_analysis",
+          "citation_ids": [
+            "doc.2fab9a0e119119f6"
+          ]
+        },
+        {
+          "action": "Verify or obtain the referenced information before relying on model or coverage conclusions.",
+          "rationale": "The submitted offer contains proposed terms; acceptance, insured scope, limits and reinsurance attachment require verification.",
+          "origin": "independent_analysis",
+          "citation_ids": [
+            "doc.ba784b3fb2191291"
+          ]
+        }
+      ],
+      "limitations": [
+        {
+          "code": "coverage_ambiguity",
+          "message": "The submitted offer contains proposed terms; acceptance, insured scope, limits and reinsurance attachment require verification.",
+          "citation_ids": [
+            "doc.ba784b3fb2191291"
+          ]
+        },
+        {
+          "code": "model_breakdown_limitation",
+          "message": "100-year rankings concern returned building rows; completeness of the portfolio breakdown must be verified.",
+          "citation_ids": []
+        },
+        {
+          "code": "model_breakdown_limitation",
+          "message": "500-year rankings concern returned building rows; completeness of the portfolio breakdown must be verified.",
+          "citation_ids": []
+        },
+        {
+          "code": "model_assumption",
+          "message": "Synthetic test assumption: building loss results only; industrial loss parameters are excluded",
+          "citation_ids": [
+            "model.synthetic-adapter-response"
+          ]
+        },
+        {
+          "code": "industrial_parameters_unknown",
+          "message": "Machinery, inventory, contents and business interruption require verified industrial loss parameters; building curves do not establish their losses.",
+          "citation_ids": []
+        },
+        {
+          "code": "risk_rating_not_supplied",
+          "message": "No approved risk-rating framework output was supplied; an independent categorical or numerical risk level is not assigned.",
+          "citation_ids": []
+        }
+      ],
+      "missing_data": [],
+      "assumptions": [
+        "Synthetic test assumption: building loss results only; industrial loss parameters are excluded"
+      ]
+    },
+    "source_references": [
+      {
+        "id": "validation.2ac03cab-76c8-4850-a690-f80cf847e119",
+        "kind": "validation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": "ai.validator.validate_extraction"
+      },
+      {
+        "id": "doc.115cbc1e5b780000",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Facility: Synthetic facility",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.12b1dcac32375300",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Facility GPS: 0.1, 34.2",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.ba784b3fb2191291",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Alpha condition: poor",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.8f2e36ef83624d86",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Alpha construction: reinforced masonry",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.c43b518a04b56ad9",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Alpha floor area: 200 m2",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.cb28dab6471afdba",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Alpha insured value: KES 1000",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.365200cd36d5d896",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Alpha GPS: 0.1, 34.2",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.8746476dc76e714b",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Beta condition: poor",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.e73e6aaa15adda18",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Beta construction: reinforced masonry",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.836230e01c5f1781",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Beta floor area: 200 m2",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.1d3f504006565ebe",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Beta insured value: KES 2000",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.f2e2b0223b20be6a",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Building Beta GPS: 0.11, 34.21",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.f4507f4cc7e42338",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Overall property sum insured: KES 10000",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.2fab9a0e119119f6",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Inventory total: KES 4000",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.6de5a953158d6ec8",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Raw materials: KES 1500",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.8063f1cf1fdd24ae",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Finished goods: KES 2500",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.bf50f3033c602b9f",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Raw materials and finished goods are mutually exclusive, non-overlapping inventory categories",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.588a1d4da6717416",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Requested flood limit: KES 2000",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.e4f358e469f30483",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Flood in 2019: claimed KES 100; settled KES 50",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.f0b6e6ddac9d81ad",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Flood in 2020: claimed KES 300; settled KES 150",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.3b1c0bc309a7bb51",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "synthetic-dashboard-offer",
+          "locator": "page:1",
+          "excerpt": "Drainage inspection: Inadequate drainage",
+          "page_number": 1
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "calc.historical.document_history.claimed.KES",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sum(amount for uniquely identified events in one source stream, amount category and currency)",
+        "inputs": [
+          {
+            "event_key": "2019",
+            "amount": "100",
+            "currency": "KES",
+            "citation_ids": [
+              "doc.e4f358e469f30483"
+            ]
+          },
+          {
+            "event_key": "2020",
+            "amount": "300",
+            "currency": "KES",
+            "citation_ids": [
+              "doc.f0b6e6ddac9d81ad"
+            ]
+          }
+        ],
+        "function": "ai.risk_calculations.historical_totals"
+      },
+      {
+        "id": "calc.historical.document_history.settled.KES",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sum(amount for uniquely identified events in one source stream, amount category and currency)",
+        "inputs": [
+          {
+            "event_key": "2019",
+            "amount": "50",
+            "currency": "KES",
+            "citation_ids": [
+              "doc.e4f358e469f30483"
+            ]
+          },
+          {
+            "event_key": "2020",
+            "amount": "150",
+            "currency": "KES",
+            "citation_ids": [
+              "doc.f0b6e6ddac9d81ad"
+            ]
+          }
+        ],
+        "function": "ai.risk_calculations.historical_totals"
+      },
+      {
+        "id": "calc.historical.event_count",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "count unique, evidenced document event date identities with nonoverlapping calendar intervals",
+        "inputs": [
+          {
+            "event_key": "2019",
+            "citation_ids": [
+              "doc.e4f358e469f30483"
+            ]
+          },
+          {
+            "event_key": "2020",
+            "citation_ids": [
+              "doc.f0b6e6ddac9d81ad"
+            ]
+          }
+        ],
+        "function": "ai.risk_calculations.event_count"
+      },
+      {
+        "id": "calc.historical.largest.claimed.KES",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "max documented amounts within one financial category and currency",
+        "inputs": [
+          {
+            "amount": "100",
+            "event_key": "2019",
+            "citation_ids": [
+              "doc.e4f358e469f30483"
+            ]
+          },
+          {
+            "amount": "300",
+            "event_key": "2020",
+            "citation_ids": [
+              "doc.f0b6e6ddac9d81ad"
+            ]
+          }
+        ],
+        "function": "ai.risk_calculations.largest_historical_amount"
+      },
+      {
+        "id": "calc.historical.largest.settled.KES",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "max documented amounts within one financial category and currency",
+        "inputs": [
+          {
+            "amount": "50",
+            "event_key": "2019",
+            "citation_ids": [
+              "doc.e4f358e469f30483"
+            ]
+          },
+          {
+            "amount": "150",
+            "event_key": "2020",
+            "citation_ids": [
+              "doc.f0b6e6ddac9d81ad"
+            ]
+          }
+        ],
+        "function": "ai.risk_calculations.largest_historical_amount"
+      },
+      {
+        "id": "validation.model_availability.2ac03cab-76c8-4850-a690-f80cf847e119",
+        "kind": "validation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": "UnderwritingModelBackend.get_model_results"
+      },
+      {
+        "id": "model.synthetic-adapter-response",
+        "kind": "model",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": "synthetic-adapter-response",
+        "model_version": "TEST_ONLY_MODEL_V1",
+        "formula": null,
+        "inputs": [
+          {
+            "backend_output": {
+              "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+              "status": "ready",
+              "model_version": "TEST_ONLY_MODEL_V1",
+              "result_id": "synthetic-adapter-response",
+              "period_results": [
+                {
+                  "return_period": 100,
+                  "currency": "KES",
+                  "total_loss": "500",
+                  "building_losses": [
+                    {
+                      "loc_id": "alpha",
+                      "loss": "100",
+                      "housing_class": "TEST_ONLY_CLASS"
+                    },
+                    {
+                      "loc_id": "beta",
+                      "loss": "400",
+                      "housing_class": "TEST_ONLY_CLASS"
+                    }
+                  ]
+                },
+                {
+                  "return_period": 500,
+                  "currency": "KES",
+                  "total_loss": "1000",
+                  "building_losses": [
+                    {
+                      "loc_id": "alpha",
+                      "loss": "300",
+                      "housing_class": "TEST_ONLY_CLASS"
+                    },
+                    {
+                      "loc_id": "beta",
+                      "loss": "700",
+                      "housing_class": "TEST_ONLY_CLASS"
+                    }
+                  ]
+                }
+              ],
+              "missing_return_periods": [],
+              "assumptions": [
+                "Synthetic test assumption: building loss results only; industrial loss parameters are excluded"
+              ],
+              "limitations": []
+            }
+          }
+        ],
+        "function": null
+      },
+      {
+        "id": "calc.model.100.building.1",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": "synthetic-adapter-response",
+        "model_version": "TEST_ONLY_MODEL_V1",
+        "formula": "sort returned building losses descending; loss / reported portfolio total * 100 when denominator and breakdown are valid",
+        "inputs": [
+          {
+            "loc_id": "beta",
+            "loss": "400",
+            "portfolio_total": "500",
+            "currency": "KES",
+            "model_citation": "model.synthetic-adapter-response"
+          }
+        ],
+        "function": "ai.risk_calculations.model_concentrations"
+      },
+      {
+        "id": "calc.model.100.building.2",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": "synthetic-adapter-response",
+        "model_version": "TEST_ONLY_MODEL_V1",
+        "formula": "sort returned building losses descending; loss / reported portfolio total * 100 when denominator and breakdown are valid",
+        "inputs": [
+          {
+            "loc_id": "alpha",
+            "loss": "100",
+            "portfolio_total": "500",
+            "currency": "KES",
+            "model_citation": "model.synthetic-adapter-response"
+          }
+        ],
+        "function": "ai.risk_calculations.model_concentrations"
+      },
+      {
+        "id": "calc.model.100.class.3",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": "synthetic-adapter-response",
+        "model_version": "TEST_ONLY_MODEL_V1",
+        "formula": "sum non-duplicate returned building losses with the same backend-reported housing class",
+        "inputs": [
+          {
+            "loc_id": "beta",
+            "loss": "400",
+            "housing_class": "TEST_ONLY_CLASS",
+            "model_citation": "model.synthetic-adapter-response"
+          },
+          {
+            "loc_id": "alpha",
+            "loss": "100",
+            "housing_class": "TEST_ONLY_CLASS",
+            "model_citation": "model.synthetic-adapter-response"
+          }
+        ],
+        "function": "ai.risk_calculations.model_concentrations"
+      },
+      {
+        "id": "calc.model.500.building.1",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": "synthetic-adapter-response",
+        "model_version": "TEST_ONLY_MODEL_V1",
+        "formula": "sort returned building losses descending; loss / reported portfolio total * 100 when denominator and breakdown are valid",
+        "inputs": [
+          {
+            "loc_id": "beta",
+            "loss": "700",
+            "portfolio_total": "1000",
+            "currency": "KES",
+            "model_citation": "model.synthetic-adapter-response"
+          }
+        ],
+        "function": "ai.risk_calculations.model_concentrations"
+      },
+      {
+        "id": "calc.model.500.building.2",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": "synthetic-adapter-response",
+        "model_version": "TEST_ONLY_MODEL_V1",
+        "formula": "sort returned building losses descending; loss / reported portfolio total * 100 when denominator and breakdown are valid",
+        "inputs": [
+          {
+            "loc_id": "alpha",
+            "loss": "300",
+            "portfolio_total": "1000",
+            "currency": "KES",
+            "model_citation": "model.synthetic-adapter-response"
+          }
+        ],
+        "function": "ai.risk_calculations.model_concentrations"
+      },
+      {
+        "id": "calc.model.500.class.6",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": "synthetic-adapter-response",
+        "model_version": "TEST_ONLY_MODEL_V1",
+        "formula": "sum non-duplicate returned building losses with the same backend-reported housing class",
+        "inputs": [
+          {
+            "loc_id": "beta",
+            "loss": "700",
+            "housing_class": "TEST_ONLY_CLASS",
+            "model_citation": "model.synthetic-adapter-response"
+          },
+          {
+            "loc_id": "alpha",
+            "loss": "300",
+            "housing_class": "TEST_ONLY_CLASS",
+            "model_citation": "model.synthetic-adapter-response"
+          }
+        ],
+        "function": "ai.risk_calculations.model_concentrations"
+      },
+      {
+        "id": "calc.compare.100.500",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": "synthetic-adapter-response",
+        "model_version": null,
+        "formula": "second scenario reported total - first scenario reported total; no new losses calculated",
+        "inputs": [
+          {
+            "return_period": 100,
+            "total_loss": "500",
+            "currency": "KES",
+            "model_citation": "model.synthetic-adapter-response"
+          },
+          {
+            "return_period": 500,
+            "total_loss": "1000",
+            "currency": "KES",
+            "model_citation": "model.synthetic-adapter-response"
+          }
+        ],
+        "function": "ai.risk_calculations.model_concentrations"
+      },
+      {
+        "id": "dashboard.historical_year.2019.94b84c1df13bf5d7a3ee",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sum verified same-stream KES amounts with the same evidenced event year",
+        "inputs": [
+          {
+            "event_key": "2019",
+            "amount": "100",
+            "currency": "KES",
+            "citation_ids": [
+              "doc.e4f358e469f30483"
+            ],
+            "event_year": "2019"
+          }
+        ],
+        "function": "app.services.dashboard.DashboardService.get"
+      },
+      {
+        "id": "dashboard.historical_year.2020.8c4b88ffa5efa6bae4ca",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sum verified same-stream KES amounts with the same evidenced event year",
+        "inputs": [
+          {
+            "event_key": "2020",
+            "amount": "300",
+            "currency": "KES",
+            "citation_ids": [
+              "doc.f0b6e6ddac9d81ad"
+            ],
+            "event_year": "2020"
+          }
+        ],
+        "function": "app.services.dashboard.DashboardService.get"
+      },
+      {
+        "id": "doc.bd47c92880bc57a3",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "179fb01c-b9cf-4718-9148-e141a1626d40",
+          "locator": "row:1",
+          "excerpt": "{\"loc_id\": \"alpha\", \"lat\": \"0.1\", \"lon\": \"34.2\", \"housing_class\": \"TEST_ONLY_CLASS\", \"floor_area_m2\": \"200\", \"tiv_kes\": \"1000\", \"coordinate_scope\": \"building\", \"occupancy\": \"industrial\"}",
+          "page_number": null
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "doc.c07ebc07fe7d9fee",
+        "kind": "document",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": {
+          "document_id": "179fb01c-b9cf-4718-9148-e141a1626d40",
+          "locator": "row:2",
+          "excerpt": "{\"loc_id\": \"beta\", \"lat\": \"0.11\", \"lon\": \"34.21\", \"housing_class\": \"TEST_ONLY_CLASS\", \"floor_area_m2\": \"200\", \"tiv_kes\": \"2000\", \"coordinate_scope\": \"building\", \"occupancy\": \"industrial\"}",
+          "page_number": null
+        },
+        "model_result_id": null,
+        "model_version": null,
+        "formula": null,
+        "inputs": [],
+        "function": null
+      },
+      {
+        "id": "dashboard.exposure_class.b27d95d465b2584a9351",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sum validated building-specific tiv_kes within the same supported construction class; excludes specialized industrial categories",
+        "inputs": [
+          {
+            "record_id": "9937d7cd-8ca9-4e10-96a2-57028d7f8448",
+            "loc_id": "alpha",
+            "housing_class": "TEST_ONLY_CLASS",
+            "tiv_kes": "1000",
+            "derived_fields": [
+              {
+                "field": "asset_category",
+                "value": "buildings",
+                "method": "column_alias",
+                "explanation": "The supplied table uses the explicit building exposure columns",
+                "input_fields": [],
+                "sources": [],
+                "approved_by": null
+              },
+              {
+                "field": "currency",
+                "value": "KES",
+                "method": "column_alias",
+                "explanation": "Currency is explicit in the source column suffix _kes",
+                "input_fields": [
+                  "tiv_kes"
+                ],
+                "sources": [
+                  {
+                    "document_id": "179fb01c-b9cf-4718-9148-e141a1626d40",
+                    "locator": "row:1",
+                    "excerpt": "{\"loc_id\": \"alpha\", \"lat\": \"0.1\", \"lon\": \"34.2\", \"housing_class\": \"TEST_ONLY_CLASS\", \"floor_area_m2\": \"200\", \"tiv_kes\": \"1000\", \"coordinate_scope\": \"building\", \"occupancy\": \"industrial\"}",
+                    "page_number": null
+                  }
+                ],
+                "approved_by": null
+              }
+            ],
+            "confirmations": []
+          },
+          {
+            "record_id": "584c9d4e-5064-4cbc-9d51-9fdcabf62574",
+            "loc_id": "beta",
+            "housing_class": "TEST_ONLY_CLASS",
+            "tiv_kes": "2000",
+            "derived_fields": [
+              {
+                "field": "asset_category",
+                "value": "buildings",
+                "method": "column_alias",
+                "explanation": "The supplied table uses the explicit building exposure columns",
+                "input_fields": [],
+                "sources": [],
+                "approved_by": null
+              },
+              {
+                "field": "currency",
+                "value": "KES",
+                "method": "column_alias",
+                "explanation": "Currency is explicit in the source column suffix _kes",
+                "input_fields": [
+                  "tiv_kes"
+                ],
+                "sources": [
+                  {
+                    "document_id": "179fb01c-b9cf-4718-9148-e141a1626d40",
+                    "locator": "row:2",
+                    "excerpt": "{\"loc_id\": \"beta\", \"lat\": \"0.11\", \"lon\": \"34.21\", \"housing_class\": \"TEST_ONLY_CLASS\", \"floor_area_m2\": \"200\", \"tiv_kes\": \"2000\", \"coordinate_scope\": \"building\", \"occupancy\": \"industrial\"}",
+                    "page_number": null
+                  }
+                ],
+                "approved_by": null
+              }
+            ],
+            "confirmations": []
+          }
+        ],
+        "function": "app.services.dashboard.DashboardService.get"
+      },
+      {
+        "id": "dashboard.asset_count.812ca1a02b412e44fef4",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "count uniquely named source-backed buildings; financial categories are not counted as structures",
+        "inputs": [
+          {
+            "name": "Building Alpha"
+          },
+          {
+            "name": "Building Beta"
+          }
+        ],
+        "function": "app.services.dashboard.DashboardService.get"
+      },
+      {
+        "id": "dashboard.building_rank.6f007f5c00a214d1c665",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sort actual same-period building losses descending, then loc_id",
+        "inputs": [
+          {
+            "loc_id": "beta",
+            "loss": "400",
+            "return_period": 100,
+            "model_result_id": "synthetic-adapter-response"
+          }
+        ],
+        "function": "app.services.dashboard.DashboardService.get"
+      },
+      {
+        "id": "dashboard.building_rank.b9ca096f898534537498",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sort actual same-period building losses descending, then loc_id",
+        "inputs": [
+          {
+            "loc_id": "alpha",
+            "loss": "100",
+            "return_period": 100,
+            "model_result_id": "synthetic-adapter-response"
+          }
+        ],
+        "function": "app.services.dashboard.DashboardService.get"
+      },
+      {
+        "id": "dashboard.building_rank.45cc5d70d41d3606942e",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sort actual same-period building losses descending, then loc_id",
+        "inputs": [
+          {
+            "loc_id": "beta",
+            "loss": "700",
+            "return_period": 500,
+            "model_result_id": "synthetic-adapter-response"
+          }
+        ],
+        "function": "app.services.dashboard.DashboardService.get"
+      },
+      {
+        "id": "dashboard.building_rank.9453f970ae7a66fa46f6",
+        "kind": "calculation",
+        "assessment_id": "2ac03cab-76c8-4850-a690-f80cf847e119",
+        "source": null,
+        "model_result_id": null,
+        "model_version": null,
+        "formula": "sort actual same-period building losses descending, then loc_id",
+        "inputs": [
+          {
+            "loc_id": "alpha",
+            "loss": "300",
+            "return_period": 500,
+            "model_result_id": "synthetic-adapter-response"
+          }
+        ],
+        "function": "app.services.dashboard.DashboardService.get"
+      }
+    ]
+  },
+  "warnings": [
+    "The submitted offer contains proposed terms; acceptance, insured scope, limits and reinsurance attachment require verification.",
+    "100-year rankings concern returned building rows; completeness of the portfolio breakdown must be verified.",
+    "500-year rankings concern returned building rows; completeness of the portfolio breakdown must be verified.",
+    "Synthetic test assumption: building loss results only; industrial loss parameters are excluded",
+    "Machinery, inventory, contents and business interruption require verified industrial loss parameters; building curves do not establish their losses.",
+    "No approved risk-rating framework output was supplied; an independent categorical or numerical risk level is not assigned."
+  ],
+  "errors": []
+}

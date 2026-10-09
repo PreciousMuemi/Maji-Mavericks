@@ -1,0 +1,8 @@
+.env
+.venv/
+.venv-*/
+.nzoia-data/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.egg-info/

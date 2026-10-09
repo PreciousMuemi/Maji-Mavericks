@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nzoia-risk-intelligence"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1", "pydantic>=2.9,<3", "pydantic-settings>=2.5,<3",
+  "uvicorn>=0.30,<1", "python-multipart>=0.0.18,<1", "httpx>=0.27,<1",
+  "PyMuPDF>=1.24,<2", "pandas>=2.2,<3", "openpyxl>=3.1,<4",
+  "python-docx>=1.1,<2", "openai>=1.60,<3", "google-genai>=1.0,<2",
+  "rasterio>=1.4,<2"
+]
+[project.optional-dependencies]
+test = ["pytest>=8,<10", "pytest-asyncio>=0.24,<2"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ai*", "api*", "app*"]
+[tool.pytest.ini_options]
+pythonpath = ["."]
+asyncio_mode = "auto"
+testpaths = ["tests"]

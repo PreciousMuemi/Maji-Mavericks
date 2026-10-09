@@ -1,0 +1,1159 @@
+{
+  "risk_summary": "Document-reported condition: Building Delta: \"poor\"; The evidence warrants protection and engineering review. Document-reported inventory values: 2000 KES; no financial categories have been added together; The evidence warrants protection and engineering review. Document-reported drainage weaknesses[0]: \"channels are inadequate\"; The evidence warrants protection and engineering review.",
+  "risk_level": {
+    "value": null,
+    "source": "No approved risk-rating framework output is available"
+  },
+  "top_risk_drivers": [
+    {
+      "id": "document.0.facts.assets[0].condition",
+      "title": "condition: Building Delta",
+      "statement": "Document-reported condition: Building Delta: \"poor\"",
+      "evidence_type": "document_reported",
+      "citation_ids": [
+        "doc.ae19ed797d42ce42"
+      ],
+      "numerical_findings": [],
+      "why_it_matters": "This can affect asset resilience and continuity of operations"
+    },
+    {
+      "id": "document.0.facts.financial_exposure.inventory_values",
+      "title": "inventory values",
+      "statement": "Document-reported inventory values: 2000 KES; no financial categories have been added together.",
+      "evidence_type": "document_reported",
+      "citation_ids": [
+        "doc.adb657d3d8ee1f38"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "inventory_values",
+          "value": "2000",
+          "unit": "KES",
+          "citation_id": "doc.adb657d3d8ee1f38"
+        }
+      ],
+      "why_it_matters": "This can affect asset resilience and continuity of operations"
+    },
+    {
+      "id": "document.0.facts.risk_factors.drainage_weaknesses[0]",
+      "title": "drainage weaknesses[0]",
+      "statement": "Document-reported drainage weaknesses[0]: \"channels are inadequate\"",
+      "evidence_type": "document_reported",
+      "citation_ids": [
+        "doc.822751b88f4b25f2"
+      ],
+      "numerical_findings": [],
+      "why_it_matters": "This can affect asset resilience and continuity of operations"
+    }
+  ],
+  "historical_claims_findings": [
+    {
+      "id": "historical.0.0.claimed",
+      "title": "Historical claimed amount",
+      "statement": "Documented historical claimed amount for 2010: 100 KES; not a future prediction.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "doc.0c0cfc7d26d4b6e6"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "historical_claimed_amount",
+          "value": "100",
+          "unit": "KES",
+          "citation_id": "doc.0c0cfc7d26d4b6e6"
+        }
+      ]
+    },
+    {
+      "id": "historical.0.0.settled",
+      "title": "Historical settled amount",
+      "statement": "Documented historical settled amount for 2010: 50 KES; not a future prediction.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "doc.0c0cfc7d26d4b6e6"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "historical_settled_amount",
+          "value": "50",
+          "unit": "KES",
+          "citation_id": "doc.0c0cfc7d26d4b6e6"
+        }
+      ]
+    },
+    {
+      "id": "historical.0.0.description",
+      "title": "Observed historical description",
+      "statement": "Documented past event description: \"flooded switchgear\"; no future severity is inferred.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "doc.0c0cfc7d26d4b6e6"
+      ],
+      "numerical_findings": []
+    },
+    {
+      "id": "historical.0.1.claimed",
+      "title": "Historical claimed amount",
+      "statement": "Documented historical claimed amount for 2011: 200 KES; not a future prediction.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "historical_claimed_amount",
+          "value": "200",
+          "unit": "KES",
+          "citation_id": "doc.58f6fa3a517d8f77"
+        }
+      ]
+    },
+    {
+      "id": "historical.0.1.settled",
+      "title": "Historical settled amount",
+      "statement": "Documented historical settled amount for 2011: 100 KES; not a future prediction.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "historical_settled_amount",
+          "value": "100",
+          "unit": "KES",
+          "citation_id": "doc.58f6fa3a517d8f77"
+        }
+      ]
+    },
+    {
+      "id": "historical.0.1.description",
+      "title": "Observed historical description",
+      "statement": "Documented past event description: \"flooded switchgear\"; no future severity is inferred.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": []
+    },
+    {
+      "id": "calc.historical.document_history.claimed.KES",
+      "title": "Cumulative historical claimed amounts",
+      "statement": "Historical claimed amounts in document_history total 300 KES; these are documented past amounts, not future predictions.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "calc.historical.document_history.claimed.KES",
+        "doc.0c0cfc7d26d4b6e6",
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "historical_claimed_total",
+          "value": "300",
+          "unit": "KES",
+          "citation_id": "calc.historical.document_history.claimed.KES"
+        }
+      ]
+    },
+    {
+      "id": "calc.historical.document_history.settled.KES",
+      "title": "Cumulative historical settled amounts",
+      "statement": "Historical settled amounts in document_history total 150 KES; these are documented past amounts, not future predictions.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "calc.historical.document_history.settled.KES",
+        "doc.0c0cfc7d26d4b6e6",
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "historical_settled_total",
+          "value": "150",
+          "unit": "KES",
+          "citation_id": "calc.historical.document_history.settled.KES"
+        }
+      ]
+    },
+    {
+      "id": "calc.historical.event_count",
+      "title": "Documented historical flood events",
+      "statement": "The document history identifies 2 distinct documented historical flood events; this count is not a future recurrence forecast.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "calc.historical.event_count",
+        "doc.0c0cfc7d26d4b6e6",
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "documented_historical_flood_events",
+          "value": "2",
+          "unit": "events",
+          "citation_id": "calc.historical.event_count"
+        }
+      ]
+    },
+    {
+      "id": "calc.historical.largest.claimed.KES",
+      "title": "Largest documented historical claimed amount",
+      "statement": "The largest documented historical claimed amount is 200 KES; claimed, settled and paid amounts remain separate.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "calc.historical.largest.claimed.KES",
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "largest_historical_claimed_amount",
+          "value": "200",
+          "unit": "KES",
+          "citation_id": "calc.historical.largest.claimed.KES"
+        }
+      ]
+    },
+    {
+      "id": "calc.historical.largest.settled.KES",
+      "title": "Largest documented historical settled amount",
+      "statement": "The largest documented historical settled amount is 100 KES; claimed, settled and paid amounts remain separate.",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "calc.historical.largest.settled.KES",
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "largest_historical_settled_amount",
+          "value": "100",
+          "unit": "KES",
+          "citation_id": "calc.historical.largest.settled.KES"
+        }
+      ]
+    },
+    {
+      "id": "calc.historical.repeated_description.0",
+      "title": "Repeated documented vulnerability description",
+      "statement": "The same reported vulnerability description appears in 2 distinct historical events: flooded switchgear",
+      "evidence_type": "historical",
+      "citation_ids": [
+        "calc.historical.repeated_description.0",
+        "doc.0c0cfc7d26d4b6e6",
+        "doc.58f6fa3a517d8f77"
+      ],
+      "numerical_findings": [
+        {
+          "metric": "events_with_repeated_description",
+          "value": "2",
+          "unit": "events",
+          "citation_id": "calc.historical.repeated_description.0"
+        }
+      ]
+    }
+  ],
+  "model_findings": [],
+  "recommended_actions": [
+    {
+      "action": "Arrange a targeted engineering inspection and verify mitigation completion",
+      "rationale": "Confirm the documented condition and suitability of proposed protections",
+      "origin": "independent_analysis",
+      "citation_ids": [
+        "doc.ae19ed797d42ce42"
+      ]
+    },
+    {
+      "action": "Arrange a targeted engineering inspection and verify mitigation completion",
+      "rationale": "Confirm the documented condition and suitability of proposed protections",
+      "origin": "independent_analysis",
+      "citation_ids": [
+        "doc.adb657d3d8ee1f38"
+      ]
+    },
+    {
+      "action": "Arrange a targeted engineering inspection and verify mitigation completion",
+      "rationale": "Confirm the documented condition and suitability of proposed protections",
+      "origin": "independent_analysis",
+      "citation_ids": [
+        "doc.822751b88f4b25f2"
+      ]
+    },
+    {
+      "action": "Improve drainage",
+      "rationale": "This is a documentary proposal/condition; it is not an independent AI recommendation or confirmation of agreed cover.",
+      "origin": "broker_proposal",
+      "citation_ids": [
+        "doc.31855c524858234a"
+      ]
+    },
+    {
+      "action": "Verify or obtain the referenced information before relying on model or coverage conclusions.",
+      "rationale": "The submitted offer contains proposed terms; acceptance, insured scope, limits and reinsurance attachment require verification.",
+      "origin": "independent_analysis",
+      "citation_ids": [
+        "doc.ae19ed797d42ce42"
+      ]
+    },
+    {
+      "action": "Verify or obtain the referenced information before relying on model or coverage conclusions.",
+      "rationale": "Building Delta: verify coordinates, construction_type, floor_area, stated_value before model execution; site coordinates and overall property totals are not individual building inputs.",
+      "origin": "independent_analysis",
+      "citation_ids": [
+        "validation.75ff5b6b-2f60-4879-8b0d-f41d7233be9d"
+      ]
+    },
+    {
+      "action": "Verify or obtain the referenced information before relying on model or coverage conclusions.",
+      "rationale": "Model results are unavailable, timed out or failed validation; no modelled statistics are generated.",
+      "origin": "independent_analysis",
+      "citation_ids": [
+        "validation.model_availability.75ff5b6b-2f60-4879-8b0d-f41d7233be9d"
+      ]
+    },
+    {
+      "action": "Verify or obtain the referenced information before relying on model or coverage conclusions.",
+      "rationale": "Verify facility/building location and supported hazard coverage before relying on catastrophe-loss estimates.",
+      "origin": "independent_analysis",
+      "citation_ids": [
+        "validation.model_availability.75ff5b6b-2f60-4879-8b0d-f41d7233be9d"
+      ]
+    },
+    {
+      "action": "Verify or obtain the referenced information before relying on model or coverage conclusions.",
+      "rationale": "No verified vulnerability assumptions are available; class applicability and non-building loss treatment have not been inferred.",
+      "origin": "independent_analysis",
+      "citation_ids": [
+        "validation.model_availability.75ff5b6b-2f60-4879-8b0d-f41d7233be9d"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "code": "coverage_ambiguity",
+      "message": "The submitted offer contains proposed terms; acceptance, insured scope, limits and reinsurance attachment require verification.",
+      "citation_ids": [
+        "doc.ae19ed797d42ce42"
+      ]
+    },
+    {
+      "code": "missing_building_model_inputs",
+      "message": "Building Delta: verify coordinates, construction_type, floor_area, stated_value before model execution; site coordinates and overall property totals are not individual building inputs.",
+      "citation_ids": [
+        "validation.75ff5b6b-2f60-4879-8b0d-f41d7233be9d"
+      ]
+    },
+    {
+      "code": "model_unavailable",
+      "message": "Model results are unavailable, timed out or failed validation; no modelled statistics are generated.",
+      "citation_ids": [
+        "validation.model_availability.75ff5b6b-2f60-4879-8b0d-f41d7233be9d"
+      ]
+    },
+    {
+      "code": "hazard_coverage_unverified",
+      "message": "Verify facility/building location and supported hazard coverage before relying on catastrophe-loss estimates.",
+      "citation_ids": [
+        "validation.model_availability.75ff5b6b-2f60-4879-8b0d-f41d7233be9d"
+      ]
+    },
+    {
+      "code": "vulnerability_assumptions_unverified",
+      "message": "No verified vulnerability assumptions are available; class applicability and non-building loss treatment have not been inferred.",
+      "citation_ids": [
+        "validation.model_availability.75ff5b6b-2f60-4879-8b0d-f41d7233be9d"
+      ]
+    },
+    {
+      "code": "industrial_parameters_unknown",
+      "message": "Machinery, inventory, contents and business interruption require verified industrial loss parameters; building curves do not establish their losses.",
+      "citation_ids": []
+    },
+    {
+      "code": "risk_rating_not_supplied",
+      "message": "No approved risk-rating framework output was supplied; an independent categorical or numerical risk level is not assigned.",
+      "citation_ids": []
+    }
+  ],
+  "citations": [
+    {
+      "id": "validation.75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "kind": "validation",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": null,
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [
+        {
+          "extraction": {
+            "assets": [],
+            "claims": [],
+            "warnings": []
+          },
+          "insurance_documents": [
+            {
+              "document_id": "synthetic-risk-document",
+              "document_type": {
+                "kind": "insurance_offer",
+                "confidence": 1.0,
+                "sources": [
+                  {
+                    "document_id": "synthetic-risk-document",
+                    "locator": "page:1",
+                    "excerpt": "Building Delta condition: poor",
+                    "page_number": 1
+                  }
+                ],
+                "reason": "Offer"
+              },
+              "facts": {
+                "insured": {
+                  "client_name": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "facility_location": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "industry": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "coordinates": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  }
+                },
+                "assets": [
+                  {
+                    "name": {
+                      "value": "Building Delta",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Building Delta condition: poor",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "construction_type": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "floor_area": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "condition": {
+                      "value": "poor",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Building Delta condition: poor",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "elevation": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "elevation_datum": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "stated_value": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "coordinates": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    }
+                  }
+                ],
+                "financial_exposure": {
+                  "property_sum_insured": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "machinery_values": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "inventory_values": {
+                    "value": {
+                      "amount": "2000",
+                      "currency": "KES"
+                    },
+                    "status": "provided",
+                    "confidence": 0.99,
+                    "sources": [
+                      {
+                        "document_id": "synthetic-risk-document",
+                        "locator": "page:1",
+                        "excerpt": "Inventory: KES 2000",
+                        "page_number": 1
+                      }
+                    ],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "contents_values": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "business_interruption_limit": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "currency": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "relationships": []
+                },
+                "insurance_terms": {
+                  "coverage_requested": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "deductibles": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "limits": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "retention": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "reinsurance_participation": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  },
+                  "premiums": {
+                    "value": null,
+                    "status": "not_provided",
+                    "confidence": null,
+                    "sources": [],
+                    "alternatives": [],
+                    "review_reason": null
+                  }
+                },
+                "flood_history": [
+                  {
+                    "event_date": {
+                      "value": "2010",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Flood event 2010; claimed KES 100; settled KES 50; flooded switchgear",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "reported_depth": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "historical_claim_value": {
+                      "value": {
+                        "amount": "100",
+                        "currency": "KES"
+                      },
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Flood event 2010; claimed KES 100; settled KES 50; flooded switchgear",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "settlement_value": {
+                      "value": {
+                        "amount": "50",
+                        "currency": "KES"
+                      },
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Flood event 2010; claimed KES 100; settled KES 50; flooded switchgear",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "business_interruption_duration": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "description": {
+                      "value": "flooded switchgear",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Flood event 2010; claimed KES 100; settled KES 50; flooded switchgear",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    }
+                  },
+                  {
+                    "event_date": {
+                      "value": "2011",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Flood event 2011; claimed KES 200; settled KES 100; flooded switchgear",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "reported_depth": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "historical_claim_value": {
+                      "value": {
+                        "amount": "200",
+                        "currency": "KES"
+                      },
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Flood event 2011; claimed KES 200; settled KES 100; flooded switchgear",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "settlement_value": {
+                      "value": {
+                        "amount": "100",
+                        "currency": "KES"
+                      },
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Flood event 2011; claimed KES 200; settled KES 100; flooded switchgear",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "business_interruption_duration": {
+                      "value": null,
+                      "status": "not_provided",
+                      "confidence": null,
+                      "sources": [],
+                      "alternatives": [],
+                      "review_reason": null
+                    },
+                    "description": {
+                      "value": "flooded switchgear",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Flood event 2011; claimed KES 200; settled KES 100; flooded switchgear",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    }
+                  }
+                ],
+                "risk_factors": {
+                  "drainage_weaknesses": [
+                    {
+                      "value": "channels are inadequate",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Drainage: channels are inadequate",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    }
+                  ],
+                  "building_deterioration": [],
+                  "flood_defenses": [
+                    {
+                      "value": "works are incomplete",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Defenses: works are incomplete",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    }
+                  ],
+                  "previous_damage": [],
+                  "operational_vulnerabilities": []
+                },
+                "document_recommendations": [
+                  {
+                    "author_role": "broker",
+                    "recommendation": {
+                      "value": "Improve drainage",
+                      "status": "provided",
+                      "confidence": 0.99,
+                      "sources": [
+                        {
+                          "document_id": "synthetic-risk-document",
+                          "locator": "page:1",
+                          "excerpt": "Broker recommends drainage improvement",
+                          "page_number": 1
+                        }
+                      ],
+                      "alternatives": [],
+                      "review_reason": null
+                    }
+                  }
+                ]
+              },
+              "review_status": "requires_review",
+              "review_items": [],
+              "contradictions": [],
+              "warnings": []
+            }
+          ]
+        }
+      ],
+      "function": "ai.validator.validate_extraction"
+    },
+    {
+      "id": "doc.ae19ed797d42ce42",
+      "kind": "document",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": {
+        "document_id": "synthetic-risk-document",
+        "locator": "page:1",
+        "excerpt": "Building Delta condition: poor",
+        "page_number": 1
+      },
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [],
+      "function": null
+    },
+    {
+      "id": "doc.adb657d3d8ee1f38",
+      "kind": "document",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": {
+        "document_id": "synthetic-risk-document",
+        "locator": "page:1",
+        "excerpt": "Inventory: KES 2000",
+        "page_number": 1
+      },
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [],
+      "function": null
+    },
+    {
+      "id": "doc.0c0cfc7d26d4b6e6",
+      "kind": "document",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": {
+        "document_id": "synthetic-risk-document",
+        "locator": "page:1",
+        "excerpt": "Flood event 2010; claimed KES 100; settled KES 50; flooded switchgear",
+        "page_number": 1
+      },
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [],
+      "function": null
+    },
+    {
+      "id": "doc.58f6fa3a517d8f77",
+      "kind": "document",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": {
+        "document_id": "synthetic-risk-document",
+        "locator": "page:1",
+        "excerpt": "Flood event 2011; claimed KES 200; settled KES 100; flooded switchgear",
+        "page_number": 1
+      },
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [],
+      "function": null
+    },
+    {
+      "id": "doc.822751b88f4b25f2",
+      "kind": "document",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": {
+        "document_id": "synthetic-risk-document",
+        "locator": "page:1",
+        "excerpt": "Drainage: channels are inadequate",
+        "page_number": 1
+      },
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [],
+      "function": null
+    },
+    {
+      "id": "doc.3d8227f49f38841b",
+      "kind": "document",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": {
+        "document_id": "synthetic-risk-document",
+        "locator": "page:1",
+        "excerpt": "Defenses: works are incomplete",
+        "page_number": 1
+      },
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [],
+      "function": null
+    },
+    {
+      "id": "doc.31855c524858234a",
+      "kind": "document",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": {
+        "document_id": "synthetic-risk-document",
+        "locator": "page:1",
+        "excerpt": "Broker recommends drainage improvement",
+        "page_number": 1
+      },
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [],
+      "function": null
+    },
+    {
+      "id": "calc.historical.document_history.claimed.KES",
+      "kind": "calculation",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": null,
+      "model_result_id": null,
+      "model_version": null,
+      "formula": "sum(amount for uniquely identified events in one source stream, amount category and currency)",
+      "inputs": [
+        {
+          "event_key": "2010",
+          "amount": "100",
+          "currency": "KES",
+          "citation_ids": [
+            "doc.0c0cfc7d26d4b6e6"
+          ]
+        },
+        {
+          "event_key": "2011",
+          "amount": "200",
+          "currency": "KES",
+          "citation_ids": [
+            "doc.58f6fa3a517d8f77"
+          ]
+        }
+      ],
+      "function": "ai.risk_calculations.historical_totals"
+    },
+    {
+      "id": "calc.historical.document_history.settled.KES",
+      "kind": "calculation",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": null,
+      "model_result_id": null,
+      "model_version": null,
+      "formula": "sum(amount for uniquely identified events in one source stream, amount category and currency)",
+      "inputs": [
+        {
+          "event_key": "2010",
+          "amount": "50",
+          "currency": "KES",
+          "citation_ids": [
+            "doc.0c0cfc7d26d4b6e6"
+          ]
+        },
+        {
+          "event_key": "2011",
+          "amount": "100",
+          "currency": "KES",
+          "citation_ids": [
+            "doc.58f6fa3a517d8f77"
+          ]
+        }
+      ],
+      "function": "ai.risk_calculations.historical_totals"
+    },
+    {
+      "id": "calc.historical.event_count",
+      "kind": "calculation",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": null,
+      "model_result_id": null,
+      "model_version": null,
+      "formula": "count unique, evidenced document event date identities with nonoverlapping calendar intervals",
+      "inputs": [
+        {
+          "event_key": "2010",
+          "citation_ids": [
+            "doc.0c0cfc7d26d4b6e6"
+          ]
+        },
+        {
+          "event_key": "2011",
+          "citation_ids": [
+            "doc.58f6fa3a517d8f77"
+          ]
+        }
+      ],
+      "function": "ai.risk_calculations.event_count"
+    },
+    {
+      "id": "calc.historical.largest.claimed.KES",
+      "kind": "calculation",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": null,
+      "model_result_id": null,
+      "model_version": null,
+      "formula": "max documented amounts within one financial category and currency",
+      "inputs": [
+        {
+          "amount": "100",
+          "event_key": "2010",
+          "citation_ids": [
+            "doc.0c0cfc7d26d4b6e6"
+          ]
+        },
+        {
+          "amount": "200",
+          "event_key": "2011",
+          "citation_ids": [
+            "doc.58f6fa3a517d8f77"
+          ]
+        }
+      ],
+      "function": "ai.risk_calculations.largest_historical_amount"
+    },
+    {
+      "id": "calc.historical.largest.settled.KES",
+      "kind": "calculation",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": null,
+      "model_result_id": null,
+      "model_version": null,
+      "formula": "max documented amounts within one financial category and currency",
+      "inputs": [
+        {
+          "amount": "50",
+          "event_key": "2010",
+          "citation_ids": [
+            "doc.0c0cfc7d26d4b6e6"
+          ]
+        },
+        {
+          "amount": "100",
+          "event_key": "2011",
+          "citation_ids": [
+            "doc.58f6fa3a517d8f77"
+          ]
+        }
+      ],
+      "function": "ai.risk_calculations.largest_historical_amount"
+    },
+    {
+      "id": "calc.historical.repeated_description.0",
+      "kind": "calculation",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": null,
+      "model_result_id": null,
+      "model_version": null,
+      "formula": "count distinct evidenced event identities sharing the same normalized reported vulnerability description",
+      "inputs": [
+        {
+          "event_key": "2010",
+          "description": "flooded switchgear",
+          "citation_ids": [
+            "doc.0c0cfc7d26d4b6e6"
+          ]
+        },
+        {
+          "event_key": "2011",
+          "description": "flooded switchgear",
+          "citation_ids": [
+            "doc.58f6fa3a517d8f77"
+          ]
+        }
+      ],
+      "function": "ai.risk_calculations.repeated_description_count"
+    },
+    {
+      "id": "validation.model_availability.75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "kind": "validation",
+      "assessment_id": "75ff5b6b-2f60-4879-8b0d-f41d7233be9d",
+      "source": null,
+      "model_result_id": null,
+      "model_version": null,
+      "formula": null,
+      "inputs": [
+        {
+          "backend_status": "unavailable_or_invalid"
+        }
+      ],
+      "function": "UnderwritingModelBackend.get_model_results"
+    }
+  ]
+}

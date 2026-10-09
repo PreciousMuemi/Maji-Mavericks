@@ -1,0 +1,730 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "AIInsights": {
+      "additionalProperties": false,
+      "properties": {
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "stored_ai_analysis",
+            "deterministic_evidence"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "risk_drivers": {
+          "items": {
+            "$ref": "#/$defs/RiskDriver"
+          },
+          "maxItems": 3,
+          "title": "Risk Drivers",
+          "type": "array"
+        },
+        "recommendations": {
+          "items": {
+            "$ref": "#/$defs/RecommendedAction"
+          },
+          "title": "Recommendations",
+          "type": "array"
+        },
+        "limitations": {
+          "items": {
+            "$ref": "#/$defs/AnalysisLimitation"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "missing_data": {
+          "items": {
+            "$ref": "#/$defs/AnalysisLimitation"
+          },
+          "title": "Missing Data",
+          "type": "array"
+        },
+        "assumptions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Assumptions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "summary",
+        "origin",
+        "risk_drivers",
+        "recommendations",
+        "limitations",
+        "missing_data",
+        "assumptions"
+      ],
+      "title": "AIInsights",
+      "type": "object"
+    },
+    "AnalysisLimitation": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Citation Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "AnalysisLimitation",
+      "type": "object"
+    },
+    "Chart": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "bar",
+            "line"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "x_label": {
+          "title": "X Label",
+          "type": "string"
+        },
+        "y_label": {
+          "title": "Y Label",
+          "type": "string"
+        },
+        "basis": {
+          "enum": [
+            "document_reported",
+            "historical",
+            "modelled",
+            "validated_exposure",
+            "workflow"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "unit": {
+          "enum": [
+            "KES",
+            "assets"
+          ],
+          "title": "Unit",
+          "type": "string"
+        },
+        "points": {
+          "items": {
+            "$ref": "#/$defs/ChartPoint"
+          },
+          "minItems": 1,
+          "title": "Points",
+          "type": "array"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        },
+        "return_period": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Return Period"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "title",
+        "x_label",
+        "y_label",
+        "basis",
+        "unit",
+        "points",
+        "note"
+      ],
+      "title": "Chart",
+      "type": "object"
+    },
+    "ChartPoint": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "title": "Value",
+          "type": "string"
+        },
+        "display_value": {
+          "title": "Display Value",
+          "type": "string"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Citation Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "label",
+        "value",
+        "display_value",
+        "citation_ids"
+      ],
+      "title": "ChartPoint",
+      "type": "object"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "document",
+            "model",
+            "calculation",
+            "validation"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "assessment_id": {
+          "title": "Assessment Id",
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceReference"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "model_result_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Result Id"
+        },
+        "model_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Version"
+        },
+        "formula": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Formula"
+        },
+        "inputs": {
+          "items": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Inputs",
+          "type": "array"
+        },
+        "function": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Function"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "assessment_id"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "DashboardMap": {
+      "additionalProperties": false,
+      "properties": {
+        "locations": {
+          "items": {
+            "$ref": "#/$defs/MapLocation"
+          },
+          "title": "Locations",
+          "type": "array"
+        },
+        "coverage_status": {
+          "enum": [
+            "unverified",
+            "unavailable",
+            "model_results_available"
+          ],
+          "title": "Coverage Status",
+          "type": "string"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "coverage_status",
+        "note"
+      ],
+      "title": "DashboardMap",
+      "type": "object"
+    },
+    "KPI": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+              "type": "string"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "display_value": {
+          "title": "Display Value",
+          "type": "string"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "unavailable",
+            "review_required"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "basis": {
+          "enum": [
+            "document_reported",
+            "historical",
+            "modelled",
+            "validated_exposure",
+            "workflow"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "currency": {
+          "anyOf": [
+            {
+              "const": "KES",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Currency"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Citation Ids",
+          "type": "array"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "value",
+        "display_value",
+        "availability",
+        "basis"
+      ],
+      "title": "KPI",
+      "type": "object"
+    },
+    "MapLocation": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "lat": {
+          "maximum": 90,
+          "minimum": -90,
+          "title": "Lat",
+          "type": "number"
+        },
+        "lon": {
+          "maximum": 180,
+          "minimum": -180,
+          "title": "Lon",
+          "type": "number"
+        },
+        "coordinate_scope": {
+          "enum": [
+            "site",
+            "building",
+            "assumed_site"
+          ],
+          "title": "Coordinate Scope",
+          "type": "string"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Citation Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "lat",
+        "lon",
+        "coordinate_scope",
+        "citation_ids"
+      ],
+      "title": "MapLocation",
+      "type": "object"
+    },
+    "NumericFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "metric": {
+          "title": "Metric",
+          "type": "string"
+        },
+        "value": {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "title": "Value",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "citation_id": {
+          "title": "Citation Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "metric",
+        "value",
+        "unit",
+        "citation_id"
+      ],
+      "title": "NumericFinding",
+      "type": "object"
+    },
+    "RecommendedAction": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "title": "Action",
+          "type": "string"
+        },
+        "rationale": {
+          "title": "Rationale",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "independent_analysis",
+            "broker_proposal",
+            "insurer_condition",
+            "insurer_proposal",
+            "surveyor_proposal",
+            "insured_proposal",
+            "unknown_document_author"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Citation Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "action",
+        "rationale",
+        "origin",
+        "citation_ids"
+      ],
+      "title": "RecommendedAction",
+      "type": "object"
+    },
+    "RiskDriver": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "statement": {
+          "title": "Statement",
+          "type": "string"
+        },
+        "evidence_type": {
+          "enum": [
+            "document_reported",
+            "historical",
+            "modelled",
+            "data_quality"
+          ],
+          "title": "Evidence Type",
+          "type": "string"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Citation Ids",
+          "type": "array"
+        },
+        "numerical_findings": {
+          "items": {
+            "$ref": "#/$defs/NumericFinding"
+          },
+          "title": "Numerical Findings",
+          "type": "array"
+        },
+        "why_it_matters": {
+          "title": "Why It Matters",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "statement",
+        "evidence_type",
+        "citation_ids",
+        "why_it_matters"
+      ],
+      "title": "RiskDriver",
+      "type": "object"
+    },
+    "SourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "locator": {
+          "title": "Locator",
+          "type": "string"
+        },
+        "excerpt": {
+          "maxLength": 500,
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "page_number": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Number"
+        }
+      },
+      "required": [
+        "document_id",
+        "locator",
+        "excerpt"
+      ],
+      "title": "SourceReference",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "assessment_id": {
+      "title": "Assessment Id",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "document_extracted",
+        "validation_required",
+        "model_ready",
+        "calculation_completed",
+        "partial_assessment",
+        "hazard_coverage_unavailable",
+        "insufficient_data"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "statuses": {
+      "items": {
+        "enum": [
+          "document_extracted",
+          "validation_required",
+          "model_ready",
+          "calculation_completed",
+          "partial_assessment",
+          "hazard_coverage_unavailable",
+          "insufficient_data"
+        ],
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Statuses",
+      "type": "array"
+    },
+    "kpis": {
+      "items": {
+        "$ref": "#/$defs/KPI"
+      },
+      "title": "Kpis",
+      "type": "array"
+    },
+    "charts": {
+      "items": {
+        "$ref": "#/$defs/Chart"
+      },
+      "title": "Charts",
+      "type": "array"
+    },
+    "map": {
+      "$ref": "#/$defs/DashboardMap"
+    },
+    "ai_insights": {
+      "$ref": "#/$defs/AIInsights"
+    },
+    "source_references": {
+      "items": {
+        "$ref": "#/$defs/Citation"
+      },
+      "title": "Source References",
+      "type": "array"
+    }
+  },
+  "required": [
+    "assessment_id",
+    "status",
+    "statuses",
+    "kpis",
+    "charts",
+    "map",
+    "ai_insights",
+    "source_references"
+  ],
+  "title": "DashboardResponse",
+  "type": "object"
+}

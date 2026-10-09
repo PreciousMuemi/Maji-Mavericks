@@ -1,0 +1,13 @@
+{
+  "fixture_only": true,
+  "insured_name": "QA Unfamiliar Ceramic Works 4886037b",
+  "property_sum_insured_kes": 2330000,
+  "requested_flood_limit_kes": 1165000,
+  "building_value": null,
+  "coordinates": null,
+  "historical_claimed_kes": 1500,
+  "historical_settled_kes": 1000,
+  "reported_depth_m": "0.3",
+  "contradiction_requires_review": true,
+  "industrial_model_losses": null
+}

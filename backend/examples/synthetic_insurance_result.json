@@ -1,0 +1,734 @@
+{
+  "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+  "document_type": {
+    "kind": "insurance_offer",
+    "confidence": 0.99,
+    "sources": [
+      {
+        "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+        "locator": "page:1",
+        "excerpt": "Insurance offer",
+        "page_number": 1
+      }
+    ],
+    "reason": "Explicit offer heading."
+  },
+  "facts": {
+    "insured": {
+      "client_name": {
+        "value": "Synthetic Test Mill",
+        "status": "provided",
+        "confidence": 0.99,
+        "sources": [
+          {
+            "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+            "locator": "page:1",
+            "excerpt": "Client: Synthetic Test Mill",
+            "page_number": 1
+          }
+        ],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "facility_location": {
+        "value": "Example County",
+        "status": "provided",
+        "confidence": 0.99,
+        "sources": [
+          {
+            "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+            "locator": "page:1",
+            "excerpt": "Site: Example County",
+            "page_number": 1
+          }
+        ],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "industry": {
+        "value": "Grain processing",
+        "status": "provided",
+        "confidence": 0.99,
+        "sources": [
+          {
+            "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+            "locator": "page:1",
+            "excerpt": "Industry: Grain processing",
+            "page_number": 1
+          }
+        ],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "coordinates": {
+        "value": {
+          "latitude": 0.5,
+          "longitude": 34.2
+        },
+        "status": "provided",
+        "confidence": 0.99,
+        "sources": [
+          {
+            "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+            "locator": "page:1",
+            "excerpt": "Coordinates: 0.5, 34.2",
+            "page_number": 1
+          }
+        ],
+        "alternatives": [],
+        "review_reason": null
+      }
+    },
+    "assets": [
+      {
+        "name": {
+          "value": "Warehouse A",
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:1",
+              "excerpt": "Building: Warehouse A",
+              "page_number": 1
+            },
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Building: Warehouse A",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "construction_type": {
+          "value": "masonry",
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:1",
+              "excerpt": "Construction: masonry",
+              "page_number": 1
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "floor_area": {
+          "value": {
+            "value": "120",
+            "lower": null,
+            "upper": null,
+            "unit": "m2"
+          },
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:1",
+              "excerpt": "Floor area: 120 m2",
+              "page_number": 1
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "condition": {
+          "value": null,
+          "status": "contradicted",
+          "confidence": null,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:1",
+              "excerpt": "Condition: fair",
+              "page_number": 1
+            },
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Condition: deteriorated",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [
+            {
+              "value": "fair",
+              "sources": [
+                {
+                  "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+                  "locator": "page:1",
+                  "excerpt": "Condition: fair",
+                  "page_number": 1
+                }
+              ]
+            },
+            {
+              "value": "deteriorated",
+              "sources": [
+                {
+                  "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+                  "locator": "page:2",
+                  "excerpt": "Condition: deteriorated",
+                  "page_number": 2
+                }
+              ]
+            }
+          ],
+          "review_reason": "Document sections give competing values; confirm whether scope, date or interpretation differs."
+        },
+        "elevation": {
+          "value": {
+            "value": "2",
+            "lower": null,
+            "upper": null,
+            "unit": "m"
+          },
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:1",
+              "excerpt": "Elevation: 2 m",
+              "page_number": 1
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "elevation_datum": {
+          "value": null,
+          "status": "not_provided",
+          "confidence": null,
+          "sources": [],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "stated_value": {
+          "value": null,
+          "status": "not_provided",
+          "confidence": null,
+          "sources": [],
+          "alternatives": [],
+          "review_reason": null
+        }
+      }
+    ],
+    "financial_exposure": {
+      "property_sum_insured": {
+        "value": null,
+        "status": "contradicted",
+        "confidence": null,
+        "sources": [],
+        "alternatives": [
+          {
+            "value": {
+              "amount": "1000000",
+              "currency": "KES"
+            },
+            "sources": [
+              {
+                "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+                "locator": "page:1",
+                "excerpt": "Property sum insured: KES 1 million",
+                "page_number": 1
+              }
+            ]
+          },
+          {
+            "value": {
+              "amount": "1200000",
+              "currency": "KES"
+            },
+            "sources": [
+              {
+                "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+                "locator": "page:2",
+                "excerpt": "Property sum insured: KES 1,200,000",
+                "page_number": 2
+              }
+            ]
+          }
+        ],
+        "review_reason": "The offer and revised schedule state different property sums."
+      },
+      "machinery_values": {
+        "value": {
+          "amount": "400000",
+          "currency": "KES"
+        },
+        "status": "provided",
+        "confidence": 0.99,
+        "sources": [
+          {
+            "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+            "locator": "page:1",
+            "excerpt": "Machinery: KES 400,000",
+            "page_number": 1
+          }
+        ],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "inventory_values": {
+        "value": {
+          "amount": "0",
+          "currency": "KES"
+        },
+        "status": "provided",
+        "confidence": 0.99,
+        "sources": [
+          {
+            "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+            "locator": "page:1",
+            "excerpt": "Inventory: KES 0",
+            "page_number": 1
+          }
+        ],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "business_interruption_limit": {
+        "value": null,
+        "status": "not_provided",
+        "confidence": null,
+        "sources": [],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "currency": {
+        "value": "KES",
+        "status": "provided",
+        "confidence": 0.99,
+        "sources": [
+          {
+            "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+            "locator": "page:1",
+            "excerpt": "Property sum insured: KES 1 million",
+            "page_number": 1
+          }
+        ],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "relationships": []
+    },
+    "insurance_terms": {
+      "coverage_requested": {
+        "value": null,
+        "status": "not_provided",
+        "confidence": null,
+        "sources": [],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "deductibles": {
+        "value": "KES 0",
+        "status": "provided",
+        "confidence": 0.99,
+        "sources": [
+          {
+            "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+            "locator": "page:1",
+            "excerpt": "Deductible: KES 0",
+            "page_number": 1
+          }
+        ],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "limits": {
+        "value": null,
+        "status": "not_provided",
+        "confidence": null,
+        "sources": [],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "retention": {
+        "value": null,
+        "status": "not_provided",
+        "confidence": null,
+        "sources": [],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "reinsurance_participation": {
+        "value": null,
+        "status": "not_provided",
+        "confidence": null,
+        "sources": [],
+        "alternatives": [],
+        "review_reason": null
+      },
+      "premiums": {
+        "value": null,
+        "status": "not_provided",
+        "confidence": null,
+        "sources": [],
+        "alternatives": [],
+        "review_reason": null
+      }
+    },
+    "flood_history": [
+      {
+        "event_date": {
+          "value": "May 2022",
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Flood event: May 2022",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "reported_depth": {
+          "value": {
+            "value": null,
+            "lower": "0.5",
+            "upper": "1",
+            "unit": "m"
+          },
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Flood depth: 0.5 to 1 m",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "historical_claim_value": {
+          "value": {
+            "amount": "60000",
+            "currency": "KES"
+          },
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Claimed: KES 60,000",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "settlement_value": {
+          "value": {
+            "amount": "40000",
+            "currency": "KES"
+          },
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Settled: KES 40,000",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "business_interruption_duration": {
+          "value": {
+            "value": "10",
+            "lower": null,
+            "upper": null,
+            "unit": "days"
+          },
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Interruption: 10 days",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        },
+        "description": {
+          "value": null,
+          "status": "not_provided",
+          "confidence": null,
+          "sources": [],
+          "alternatives": [],
+          "review_reason": null
+        }
+      }
+    ],
+    "risk_factors": {
+      "drainage_weaknesses": [
+        {
+          "value": "Blocked channels",
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:1",
+              "excerpt": "Drainage: blocked channels.",
+              "page_number": 1
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        }
+      ],
+      "building_deterioration": [],
+      "flood_defenses": [],
+      "previous_damage": [
+        {
+          "value": "Flooded switchgear",
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Previous damage: flooded switchgear.",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        }
+      ],
+      "operational_vulnerabilities": [
+        {
+          "value": "Unprotected switchgear",
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:2",
+              "excerpt": "Critical vulnerability: unprotected switchgear.",
+              "page_number": 2
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        }
+      ]
+    },
+    "document_recommendations": [
+      {
+        "author_role": "broker",
+        "recommendation": {
+          "value": "Improve drainage",
+          "status": "provided",
+          "confidence": 0.99,
+          "sources": [
+            {
+              "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+              "locator": "page:1",
+              "excerpt": "Broker recommends improving drainage.",
+              "page_number": 1
+            }
+          ],
+          "alternatives": [],
+          "review_reason": null
+        }
+      }
+    ]
+  },
+  "review_status": "requires_review",
+  "review_items": [
+    {
+      "code": "contradiction",
+      "field_path": "facts.assets[0].condition",
+      "message": "Document sections give competing values; confirm whether scope, date or interpretation differs.",
+      "sources": [
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:1",
+          "excerpt": "Condition: fair",
+          "page_number": 1
+        },
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:2",
+          "excerpt": "Condition: deteriorated",
+          "page_number": 2
+        }
+      ]
+    },
+    {
+      "code": "elevation_datum_missing",
+      "field_path": "facts.assets[0].elevation",
+      "message": "Confirm whether elevation is relative to ground, river level, or a geodetic datum.",
+      "sources": [
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:1",
+          "excerpt": "Elevation: 2 m",
+          "page_number": 1
+        }
+      ]
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.assets[0].elevation_datum",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.assets[0].stated_value",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "contradiction",
+      "field_path": "facts.financial_exposure.property_sum_insured",
+      "message": "The offer and revised schedule state different property sums.",
+      "sources": [
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:1",
+          "excerpt": "Property sum insured: KES 1 million",
+          "page_number": 1
+        },
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:2",
+          "excerpt": "Property sum insured: KES 1,200,000",
+          "page_number": 2
+        }
+      ]
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.financial_exposure.business_interruption_limit",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.insurance_terms.coverage_requested",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.insurance_terms.limits",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.insurance_terms.retention",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.insurance_terms.reinsurance_participation",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.insurance_terms.premiums",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.flood_history[0].description",
+      "message": "Not provided in extractable document content; do not substitute zero.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.risk_factors.building_deterioration",
+      "message": "Not provided; do not interpret missing observations as absence of risk.",
+      "sources": []
+    },
+    {
+      "code": "not_provided",
+      "field_path": "facts.risk_factors.flood_defenses",
+      "message": "Not provided; do not interpret missing observations as absence of risk.",
+      "sources": []
+    },
+    {
+      "code": "financial_overlap_unverified",
+      "field_path": "facts.financial_exposure.property_sum_insured",
+      "message": "Relationship with machinery_values is unverified. Preserve both amounts separately; no total has been calculated.",
+      "sources": []
+    },
+    {
+      "code": "financial_overlap_unverified",
+      "field_path": "facts.financial_exposure.property_sum_insured",
+      "message": "Relationship with inventory_values is unverified. Preserve both amounts separately; no total has been calculated.",
+      "sources": []
+    },
+    {
+      "code": "financial_overlap_unverified",
+      "field_path": "facts.financial_exposure.machinery_values",
+      "message": "Relationship with inventory_values is unverified. Preserve both amounts separately; no total has been calculated.",
+      "sources": []
+    }
+  ],
+  "contradictions": [
+    {
+      "field_path": "facts.assets[0].condition",
+      "message": "Document sections give competing values; confirm whether scope, date or interpretation differs.",
+      "sources": [
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:1",
+          "excerpt": "Condition: fair",
+          "page_number": 1
+        },
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:2",
+          "excerpt": "Condition: deteriorated",
+          "page_number": 2
+        }
+      ]
+    },
+    {
+      "field_path": "facts.financial_exposure.property_sum_insured",
+      "message": "The offer and revised schedule state different property sums.",
+      "sources": [
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:1",
+          "excerpt": "Property sum insured: KES 1 million",
+          "page_number": 1
+        },
+        {
+          "document_id": "90d9cbaa-b2d0-474b-884b-5cd19663a239",
+          "locator": "page:2",
+          "excerpt": "Property sum insured: KES 1,200,000",
+          "page_number": 2
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

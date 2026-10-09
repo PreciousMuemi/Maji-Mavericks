@@ -1,0 +1,39 @@
+{
+  "fixture_only": true,
+  "insured_name": "QA Sample Estate 4886037b",
+  "assets": [
+    {
+      "asset_id": "QA-4886037b-1",
+      "name": "QA Building 1 4886037b",
+      "lat": 0.05,
+      "lon": 34.1,
+      "construction": "reinforced masonry",
+      "floor_area_m2": 120,
+      "insured_value_kes": 800000
+    },
+    {
+      "asset_id": "QA-4886037b-2",
+      "name": "QA Building 2 4886037b",
+      "lat": 0.051,
+      "lon": 34.101,
+      "construction": "reinforced masonry",
+      "floor_area_m2": 240,
+      "insured_value_kes": 680000
+    },
+    {
+      "asset_id": "QA-4886037b-3",
+      "name": "QA Building 3 4886037b",
+      "lat": 0.052,
+      "lon": 34.102,
+      "construction": "reinforced masonry",
+      "floor_area_m2": 360,
+      "insured_value_kes": 850000
+    }
+  ],
+  "property_sum_insured_kes": 2330000,
+  "requested_flood_limit_kes": 1165000,
+  "historical_claims": null,
+  "risk_level": null,
+  "construction_class_applicability": "unverified",
+  "model_losses": null
+}

@@ -1,0 +1,30 @@
+# Credentials and local overrides
+.env
+*.env
+!*.env.example
+
+# Python environments and generated packages
+.venv/
+.venv-*/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Nzoia runtime state
+.nzoia-data/
+storage/
+
+# Frontend dependencies and build output
+node_modules/
+.next/
+dist/
+build/
+
+# Editor and operating-system metadata
+.DS_Store
+Thumbs.db
+*:Zone.Identifier

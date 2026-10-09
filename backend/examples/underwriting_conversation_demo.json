@@ -1,0 +1,339 @@
+{
+  "demonstration": "Persisted assessment with synthetic offer and scripted LLM; actual model unavailable",
+  "turns": [
+    {
+      "user": "What information is missing from this insurance offer?",
+      "response": {
+        "status": "success",
+        "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608",
+        "data": {
+          "summary": "Portfolio/document review:\nfacts.assets[0].condition: Document sections give competing values; confirm whether scope, date or interpretation differs.\nfacts.assets[0].elevation: Confirm whether elevation is relative to ground, river level, or a geodetic datum.\nfacts.assets[0].elevation_datum: Not provided in extractable document content; do not substitute zero.\nfacts.assets[0].stated_value: Not provided in extractable document content; do not substitute zero.\nfacts.assets[0].coordinates: Not provided in extractable document content; do not substitute zero.\nfacts.financial_exposure.property_sum_insured: The offer and revised schedule state different property sums.\nfacts.financial_exposure.contents_values: Not provided in extractable document content; do not substitute zero.\nfacts.financial_exposure.business_interruption_limit: Not provided in extractable document content; do not substitute zero.\nfacts.insurance_terms.coverage_requested: Not provided in extractable document content; do not substitute zero.\nfacts.insurance_terms.limits: Not provided in extractable document content; do not substitute zero.\nfacts.insurance_terms.retention: Not provided in extractable document content; do not substitute zero.\nfacts.insurance_terms.reinsurance_participation: Not provided in extractable document content; do not substitute zero.\nfacts.insurance_terms.premiums: Not provided in extractable document content; do not substitute zero.\nfacts.flood_history[0].description: Not provided in extractable document content; do not substitute zero.\nfacts.risk_factors.building_deterioration: Not provided; do not interpret missing observations as absence of risk.\nfacts.risk_factors.flood_defenses: Not provided; do not interpret missing observations as absence of risk.\nfacts.financial_exposure.property_sum_insured: Relationship with machinery_values is unverified. Preserve both amounts separately; no total has been calculated.\nfacts.financial_exposure.property_sum_insured: Relationship with inventory_values is unverified. Preserve both amounts separately; no total has been calculated.\nfacts.financial_exposure.machinery_values: Relationship with inventory_values is unverified. Preserve both amounts separately; no total has been calculated.",
+          "findings": [
+            {
+              "code": "contradiction",
+              "severity": "warning",
+              "message": "Document sections give competing values; confirm whether scope, date or interpretation differs.",
+              "asset_id": null,
+              "field_path": "facts.assets[0].condition"
+            },
+            {
+              "code": "elevation_datum_missing",
+              "severity": "warning",
+              "message": "Confirm whether elevation is relative to ground, river level, or a geodetic datum.",
+              "asset_id": null,
+              "field_path": "facts.assets[0].elevation"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.assets[0].elevation_datum"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.assets[0].stated_value"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.assets[0].coordinates"
+            },
+            {
+              "code": "contradiction",
+              "severity": "warning",
+              "message": "The offer and revised schedule state different property sums.",
+              "asset_id": null,
+              "field_path": "facts.financial_exposure.property_sum_insured"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.financial_exposure.contents_values"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.financial_exposure.business_interruption_limit"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.insurance_terms.coverage_requested"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.insurance_terms.limits"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.insurance_terms.retention"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.insurance_terms.reinsurance_participation"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.insurance_terms.premiums"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided in extractable document content; do not substitute zero.",
+              "asset_id": null,
+              "field_path": "facts.flood_history[0].description"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided; do not interpret missing observations as absence of risk.",
+              "asset_id": null,
+              "field_path": "facts.risk_factors.building_deterioration"
+            },
+            {
+              "code": "not_provided",
+              "severity": "warning",
+              "message": "Not provided; do not interpret missing observations as absence of risk.",
+              "asset_id": null,
+              "field_path": "facts.risk_factors.flood_defenses"
+            },
+            {
+              "code": "financial_overlap_unverified",
+              "severity": "warning",
+              "message": "Relationship with machinery_values is unverified. Preserve both amounts separately; no total has been calculated.",
+              "asset_id": null,
+              "field_path": "facts.financial_exposure.property_sum_insured"
+            },
+            {
+              "code": "financial_overlap_unverified",
+              "severity": "warning",
+              "message": "Relationship with inventory_values is unverified. Preserve both amounts separately; no total has been calculated.",
+              "asset_id": null,
+              "field_path": "facts.financial_exposure.property_sum_insured"
+            },
+            {
+              "code": "financial_overlap_unverified",
+              "severity": "warning",
+              "message": "Relationship with inventory_values is unverified. Preserve both amounts separately; no total has been calculated.",
+              "asset_id": null,
+              "field_path": "facts.financial_exposure.machinery_values"
+            }
+          ],
+          "sources": [],
+          "model_results": null,
+          "dashboard_updates": [
+            {
+              "action": "refresh_findings",
+              "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608",
+              "result_id": null,
+              "field": null,
+              "periods": []
+            }
+          ],
+          "tool_executions": [
+            {
+              "name": "get_assessment",
+              "status": "success",
+              "code": null
+            },
+            {
+              "name": "validate_portfolio",
+              "status": "success",
+              "code": null
+            }
+          ]
+        },
+        "warnings": [],
+        "errors": []
+      }
+    },
+    {
+      "user": "Show the evidence for the facility coordinates.",
+      "response": {
+        "status": "success",
+        "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608",
+        "data": {
+          "summary": "facts.insured.coordinates: {\"latitude\": 0.5, \"longitude\": 34.2} (provided)",
+          "findings": [],
+          "sources": [
+            {
+              "document_id": "3def3f7d-1b86-48de-8451-9ee217d6ac15",
+              "locator": "page:1",
+              "excerpt": "Coordinates: 0.5, 34.2",
+              "page_number": 1
+            }
+          ],
+          "model_results": null,
+          "dashboard_updates": [
+            {
+              "action": "show_evidence",
+              "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608",
+              "result_id": null,
+              "field": "facts.insured.coordinates",
+              "periods": []
+            }
+          ],
+          "tool_executions": [
+            {
+              "name": "get_assessment",
+              "status": "success",
+              "code": null
+            },
+            {
+              "name": "get_document_evidence",
+              "status": "success",
+              "code": null
+            }
+          ]
+        },
+        "warnings": [],
+        "errors": []
+      }
+    },
+    {
+      "user": "Analyse this portfolio for flood risk.",
+      "response": {
+        "status": "partial",
+        "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608",
+        "data": {
+          "summary": "No flood-model loss results are available. Flood model integration is unavailable or required inputs are incomplete Historical claims describe past losses and are not future predictions.",
+          "findings": [],
+          "sources": [],
+          "model_results": null,
+          "dashboard_updates": [],
+          "tool_executions": [
+            {
+              "name": "get_assessment",
+              "status": "success",
+              "code": null
+            },
+            {
+              "name": "get_model_results",
+              "status": "error",
+              "code": "integration_unavailable"
+            }
+          ]
+        },
+        "warnings": [
+          "Flood model integration is unavailable or required inputs are incomplete"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "user": "Run the 100-year flood scenario.",
+      "response": {
+        "status": "partial",
+        "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608",
+        "data": {
+          "summary": "No flood-model loss results are available. Flood modelling requires verified building coordinates, individual insured values and consistent currency. Document/history analysis remains available. Historical claims describe past losses and are not future predictions.",
+          "findings": [],
+          "sources": [],
+          "model_results": null,
+          "dashboard_updates": [],
+          "tool_executions": [
+            {
+              "name": "get_assessment",
+              "status": "success",
+              "code": null
+            },
+            {
+              "name": "run_flood_model",
+              "status": "error",
+              "code": "missing_model_inputs"
+            }
+          ]
+        },
+        "warnings": [
+          "Flood modelling requires verified building coordinates, individual insured values and consistent currency. Document/history analysis remains available."
+        ],
+        "errors": []
+      }
+    },
+    {
+      "user": "Which buildings contribute the largest losses?",
+      "response": {
+        "status": "partial",
+        "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608",
+        "data": {
+          "summary": "No flood-model loss results are available. Flood model integration is unavailable or required inputs are incomplete Historical claims describe past losses and are not future predictions.",
+          "findings": [],
+          "sources": [],
+          "model_results": null,
+          "dashboard_updates": [],
+          "tool_executions": [
+            {
+              "name": "get_assessment",
+              "status": "success",
+              "code": null
+            },
+            {
+              "name": "get_model_results",
+              "status": "error",
+              "code": "integration_unavailable"
+            }
+          ]
+        },
+        "warnings": [
+          "Flood model integration is unavailable or required inputs are incomplete"
+        ],
+        "errors": []
+      }
+    },
+    {
+      "user": "Compare the 100-year and 500-year flood scenarios.",
+      "response": {
+        "status": "partial",
+        "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608",
+        "data": {
+          "summary": "No flood-model loss results are available. Flood model integration is unavailable or required inputs are incomplete Historical claims describe past losses and are not future predictions.",
+          "findings": [],
+          "sources": [],
+          "model_results": null,
+          "dashboard_updates": [],
+          "tool_executions": [
+            {
+              "name": "get_assessment",
+              "status": "success",
+              "code": null
+            },
+            {
+              "name": "compare_return_periods",
+              "status": "error",
+              "code": "integration_unavailable"
+            }
+          ]
+        },
+        "warnings": [
+          "Flood model integration is unavailable or required inputs are incomplete"
+        ],
+        "errors": []
+      }
+    }
+  ],
+  "assessment_id": "61598072-e8a3-498a-946e-9d10b588f608"
+}

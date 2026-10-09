@@ -1,0 +1,454 @@
+{
+  "readiness": "NOT_READY",
+  "run_utc": "2026-10-08T15:08:11.265523+00:00",
+  "configuration": {
+    "llm_provider": "openai",
+    "llm_credentials_configured": false,
+    "hazard_rasters_present": false,
+    "verified_vulnerability_contract_present": false,
+    "real_model_integration_configured": false,
+    "test_doubles_used_in_http_run": false,
+    "api_authentication_enabled_for_qa": true
+  },
+  "files": {
+    "insurance_offer": "OFFER_NZOIA_GRAIN_PROCESSING.pdf",
+    "exposure_schedule": "exposure_nzoia_synthetic(in).csv",
+    "generated_property_schedule": "backend/qa/fixtures/generated_property_schedule.xlsx",
+    "unfamiliar_offer": "backend/qa/fixtures/unfamiliar_insurance_offer.docx"
+  },
+  "totals": {
+    "passed": 36,
+    "failed": 0,
+    "blocked": 24
+  },
+  "assessment_ids": {
+    "offer_pdf": "31fc50f7-8d35-48f6-8461-a56698a1511c",
+    "exposure_csv": "1226739a-5195-4148-8572-f3104a3cf392",
+    "generated_schedule": "829e4e89-f3f4-4fe8-b519-6fbde2dcc210",
+    "unfamiliar_offer": "b7e62307-66d4-42f3-9dd2-4855e30d3a58"
+  },
+  "private_artifact_directory": "/home/gachuuri/KenyaRE/Maji-Mavericks/backend/.nzoia-data/qa-20261008T150807-31525f",
+  "server_stopped": true,
+  "cases": [
+    {
+      "id": "01_backend_start",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Real Uvicorn process responds over loopback HTTP; isolated durable SQLite storage and authenticated API."
+    },
+    {
+      "id": "offer_pdf_upload",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 201,
+      "detail": "Actual multipart upload of OFFER_NZOIA_GRAIN_PROCESSING.pdf"
+    },
+    {
+      "id": "03_pdf_all_pages",
+      "outcome": "passed",
+      "layer": "persisted_api_upload_verification",
+      "http_status": null,
+      "detail": "Expected 32 pages; stored text on 32 pages; missing pages []."
+    },
+    {
+      "id": "offer_pdf_ai_extraction",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "AI extraction did not run: llm_unavailable"
+    },
+    {
+      "id": "offer_pdf_canonical_extraction",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Actual canonical AI extraction request; no expected outcomes were injected."
+    },
+    {
+      "id": "offer_pdf_partial_dashboard",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 200,
+      "detail": "Strict dashboard JSON; unavailable figures remain null and no modelled chart or completed-calculation status appears."
+    },
+    {
+      "id": "exposure_csv_upload",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 201,
+      "detail": "Actual multipart upload of exposure_nzoia_synthetic(in).csv"
+    },
+    {
+      "id": "exposure_csv_parsed_rows",
+      "outcome": "passed",
+      "layer": "persisted_api_upload_verification",
+      "http_status": null,
+      "detail": "500 actual parsed source segments."
+    },
+    {
+      "id": "exposure_csv_ai_extraction",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "AI extraction did not run: llm_unavailable"
+    },
+    {
+      "id": "exposure_csv_canonical_extraction",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Actual canonical AI extraction request; no expected outcomes were injected."
+    },
+    {
+      "id": "exposure_csv_partial_dashboard",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 200,
+      "detail": "Strict dashboard JSON; unavailable figures remain null and no modelled chart or completed-calculation status appears."
+    },
+    {
+      "id": "generated_schedule_upload",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 201,
+      "detail": "Actual multipart upload of generated_property_schedule.xlsx"
+    },
+    {
+      "id": "generated_schedule_parsed_rows",
+      "outcome": "passed",
+      "layer": "persisted_api_upload_verification",
+      "http_status": null,
+      "detail": "13 actual parsed source segments."
+    },
+    {
+      "id": "generated_source_cells",
+      "outcome": "passed",
+      "layer": "persisted_api_upload_verification",
+      "http_status": null,
+      "detail": "Actual uploaded spreadsheet retains all generated building names, coordinates, areas and values; this verifies parser cells, not AI extraction."
+    },
+    {
+      "id": "generated_schedule_ai_extraction",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "AI extraction did not run: llm_unavailable"
+    },
+    {
+      "id": "generated_schedule_canonical_extraction",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Actual canonical AI extraction request; no expected outcomes were injected."
+    },
+    {
+      "id": "generated_schedule_partial_dashboard",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 200,
+      "detail": "Strict dashboard JSON; unavailable figures remain null and no modelled chart or completed-calculation status appears."
+    },
+    {
+      "id": "unfamiliar_offer_upload",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 201,
+      "detail": "Actual multipart upload of unfamiliar_insurance_offer.docx"
+    },
+    {
+      "id": "unfamiliar_offer_parsed_rows",
+      "outcome": "passed",
+      "layer": "persisted_api_upload_verification",
+      "http_status": null,
+      "detail": "13 actual parsed source segments."
+    },
+    {
+      "id": "unfamiliar_offer_ai_extraction",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "AI extraction did not run: llm_unavailable"
+    },
+    {
+      "id": "unfamiliar_offer_canonical_extraction",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Actual canonical AI extraction request; no expected outcomes were injected."
+    },
+    {
+      "id": "unfamiliar_offer_partial_dashboard",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 200,
+      "detail": "Strict dashboard JSON; unavailable figures remain null and no modelled chart or completed-calculation status appears."
+    },
+    {
+      "id": "04_insured_entity",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Correct insured identity: no actual offer LLM extraction is available; human/text observations are not substituted as AI output."
+    },
+    {
+      "id": "05_financial_terms",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Property, inventory and insurance terms: no actual offer LLM extraction is available; human/text observations are not substituted as AI output."
+    },
+    {
+      "id": "06_assets",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Building-specific assets and values: no actual offer LLM extraction is available; human/text observations are not substituted as AI output."
+    },
+    {
+      "id": "07_historical_claims",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Event dates, claimed/settled amounts and observed depths: no actual offer LLM extraction is available; human/text observations are not substituted as AI output."
+    },
+    {
+      "id": "08_contradictions",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Missing-field and contradiction detection: no actual offer LLM extraction is available; human/text observations are not substituted as AI output."
+    },
+    {
+      "id": "generated_expected_outcomes",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Expected outcomes saved independently; cannot verify them without real AI extraction."
+    },
+    {
+      "id": "09_hazard_extent",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "No flood raster, nonempty hazard catalog or verified extracted site coordinate is supplied. No guessed coverage test was substituted."
+    },
+    {
+      "id": "10_loss_calculation",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "No supported numerical flood calculation can execute; actual endpoint returned 503"
+    },
+    {
+      "id": "loss_failure_no_fake_success",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Unavailable model fails explicitly without accepted numerical results."
+    },
+    {
+      "id": "12_ai_summary",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 200,
+      "detail": "Actual endpoint provides a labelled deterministic partial fallback, not an AI-generated interpretation."
+    },
+    {
+      "id": "analysis_fallback_honest",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Fallback is partial, has explicit AI/model limitations and no predicted loss or risk score."
+    },
+    {
+      "id": "13_chat_0",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Follow-up attempted over HTTP; live tool selection cannot execute without a configured provider."
+    },
+    {
+      "id": "chat_failure_0",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "No fabricated answer is returned when chat dependency is unavailable."
+    },
+    {
+      "id": "13_chat_1",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Follow-up attempted over HTTP; live tool selection cannot execute without a configured provider."
+    },
+    {
+      "id": "chat_failure_1",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "No fabricated answer is returned when chat dependency is unavailable."
+    },
+    {
+      "id": "13_chat_2",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Follow-up attempted over HTTP; live tool selection cannot execute without a configured provider."
+    },
+    {
+      "id": "chat_failure_2",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "No fabricated answer is returned when chat dependency is unavailable."
+    },
+    {
+      "id": "13_chat_3",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Follow-up attempted over HTTP; live tool selection cannot execute without a configured provider."
+    },
+    {
+      "id": "chat_failure_3",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "No fabricated answer is returned when chat dependency is unavailable."
+    },
+    {
+      "id": "14_supported_what_if",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": 503,
+      "detail": "Scenario parameter support and calibrated execution are unavailable; attempted request returns 503"
+    },
+    {
+      "id": "scenario_failure_no_fake_success",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "No unexecuted scenario results appear."
+    },
+    {
+      "id": "15_financial_consistency_unavailable",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Unavailable financial/model values stay unavailable across findings and dashboard; no zeros or claims-as-projections."
+    },
+    {
+      "id": "15_extracted_financial_consistency",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "Actual numeric reconciliation requires successful AI extraction and model results."
+    },
+    {
+      "id": "missing_documents",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "Extraction rejects missing documents."
+    },
+    {
+      "id": "invalid_upload_0",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "unsupported.exe rejected through the actual multipart API."
+    },
+    {
+      "id": "invalid_upload_1",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "empty.pdf rejected through the actual multipart API."
+    },
+    {
+      "id": "invalid_upload_2",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "corrupt.pdf rejected through the actual multipart API."
+    },
+    {
+      "id": "invalid_upload_3",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "spoofed.xlsx rejected through the actual multipart API."
+    },
+    {
+      "id": "invalid_upload_4",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "invalid.csv rejected through the actual multipart API."
+    },
+    {
+      "id": "invalid_upload_5",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "oversized.pdf rejected through the actual multipart API."
+    },
+    {
+      "id": "invalid_upload_6",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "extra_cells.csv rejected through the actual multipart API."
+    },
+    {
+      "id": "invalid_upload_7",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "duplicate_headers.csv rejected through the actual multipart API."
+    },
+    {
+      "id": "invalid_chat_0",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "Invalid chat schema rejected with sanitized errors."
+    },
+    {
+      "id": "invalid_chat_1",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "Invalid chat schema rejected with sanitized errors."
+    },
+    {
+      "id": "scenario_identity_override",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 422,
+      "detail": "Actual HTTP scenario rejects nested assessment identity overrides before backend access."
+    },
+    {
+      "id": "invalid_token",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 401,
+      "detail": "Actual server rejects invalid bearer token."
+    },
+    {
+      "id": "unknown_assessment",
+      "outcome": "passed",
+      "layer": "real_http",
+      "http_status": 404,
+      "detail": "Unknown assessment returns a sanitized not-found envelope."
+    },
+    {
+      "id": "18_live_tool_selection",
+      "outcome": "blocked",
+      "layer": "real_http",
+      "http_status": null,
+      "detail": "No live LLM tool selection or actual catastrophe function call succeeded; unit-double coverage is reported separately."
+    }
+  ]
+}
