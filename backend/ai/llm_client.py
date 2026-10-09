@@ -202,13 +202,50 @@ class AnthropicClient:
                     stripped = stripped[4:].lstrip()
             return schema.model_validate_json(stripped)
 
+        def discard_unverified_facts(raw: str, errors: list[dict[str, Any]]):
+            """Replace invalid Fact-shaped fields with an explicit missing state.
+
+            This is conservative salvage: an unsupported value is discarded rather
+            than accepted. Downstream review generation exposes the missing field.
+            """
+            stripped = raw.strip()
+            if stripped.startswith('```') and stripped.endswith('```'):
+                stripped = stripped[3:-3].strip()
+                if stripped.casefold().startswith('json'):
+                    stripped = stripped[4:].lstrip()
+            payload = json.loads(stripped)
+            discarded = False
+            for error in errors:
+                location = list(error.get('loc') or [])
+                for length in range(len(location), 0, -1):
+                    parent: Any = payload
+                    try:
+                        for part in location[:length]:
+                            parent = parent[part]
+                    except (KeyError, IndexError, TypeError):
+                        continue
+                    if (isinstance(parent, dict) and 'status' in parent
+                            and 'sources' in parent and 'confidence' in parent):
+                        parent.clear()
+                        parent.update({'value': None, 'status': 'not_provided',
+                                       'confidence': None, 'sources': [],
+                                       'alternatives': [], 'review_reason': None})
+                        discarded = True
+                        break
+            if not discarded:
+                raise ValueError('No safely discardable unverified fact was found')
+            return schema.model_validate(payload)
+
         for repair_attempt in range(3):
             validation_error = None
             try:
                 return validate(content)
             except Exception as exc:
                 if repair_attempt == 2:
-                    raise
+                    raw_errors = getattr(exc, 'errors', lambda **_: [])(include_input=False)
+                    if not raw_errors:
+                        raise
+                    return discard_unverified_facts(content, raw_errors)
                 validation_error = exc
             raw_errors = getattr(validation_error, 'errors', lambda **_: [])(include_input=False)
             if not raw_errors:

@@ -1,3 +1,4 @@
+import json
 from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
@@ -6,7 +7,7 @@ from pydantic import BaseModel, Field
 from ai.config import Settings
 from ai.llm_client import AnthropicClient, GeminiClient, OpenAIClient, OpenRouterClient, UnconfiguredClient, _anthropic_schema, _provider_schema, create_llm_client
 from ai.schemas import DocumentExtraction
-from ai.insurance_schemas import InsuranceFacts
+from ai.insurance_schemas import InsuranceFacts, InsuranceFinancialTerms
 
 
 def test_config_reads_env_and_masks_secret(monkeypatch):
@@ -196,6 +197,27 @@ async def test_anthropic_repairs_cross_field_validation_after_native_output():
 
     assert result.value == 5
     assert create.await_count == 2
+
+
+@pytest.mark.asyncio
+async def test_anthropic_discards_fact_that_remains_unverified_after_repairs():
+    client = AnthropicClient.__new__(AnthropicClient)
+    client.model = 'claude-test'
+    client.max_output_tokens = 32768
+    invalid = InsuranceFinancialTerms().model_dump(mode='json')
+    invalid['insurance_terms']['premiums'] = {
+        'value': {'amount': '100', 'currency': 'KES'}, 'status': 'provided',
+        'confidence': None, 'sources': [], 'alternatives': [], 'review_reason': None,
+    }
+    response = SimpleNamespace(content=[SimpleNamespace(type='text', text=json.dumps(invalid))])
+    create = AsyncMock(side_effect=[response, response, response])
+    client.client = SimpleNamespace(messages=SimpleNamespace(create=create))
+
+    result = await client.structured('system', 'document', InsuranceFinancialTerms)
+
+    assert result.insurance_terms.premiums.status == 'not_provided'
+    assert result.insurance_terms.premiums.value is None
+    assert create.await_count == 3
 
 
 def test_anthropic_replays_tool_results_in_native_message_blocks():
