@@ -15,6 +15,7 @@ from .insurance_schemas import Money
 from .intelligence_schemas import (
     AnalysisLimitation, AnalysisNarrative, Citation, IntelligenceFinding, NarrativeSelection,
     NumericFinding, RecommendedAction, RiskDriver, RiskLevel, UnderwritingAnalysis,
+    UnderwritingDecision,
 )
 from .llm_client import LLMUnavailable, create_llm_client
 from .model_backend import UnavailableUnderwritingBackend
@@ -281,7 +282,36 @@ class UnderwritingAnalysisService:
                 observation(f'quality.{index}', item.code.replace('_', ' '), item.message, 'data_quality', item.citation_ids)
         known = {item.id: item for item in observations}
         eligible = [item for item in observations if item.evidence_type != 'data_quality']
-        fallback = AnalysisNarrative(summary=[NarrativeSelection(finding_id=item.id, explanation='This evidence requires underwriting review') for item in eligible[:3]] or [NarrativeSelection(finding_id=next(iter(known)), explanation='Available information remains limited')], drivers=[NarrativeSelection(finding_id=item.id, explanation='Review its implications for asset protection and model applicability') for item in eligible[:3]], actions=[])
+        def implication(item):
+            text = f'{item.title} {item.statement}'.casefold()
+            if any(word in text for word in ('condition', 'deteriorat', 'settlement', 'roof')):
+                return 'Require an independent structural assessment and completed remediation before accepting this exposure'
+            if any(word in text for word in ('drainage', 'pump', 'flood defense', 'flood barrier')):
+                return 'Make drainage and flood-protection verification a condition before offering flood cover'
+            if any(word in text for word in ('claim', 'flood history', 'historical')):
+                return 'Escalate the loss history and review the deductible, limit and completion of risk improvements'
+            if any(word in text for word in ('inventory', 'machinery', 'business interruption')):
+                return 'Separate this exposure from building loss and require suitable sublimits and protection controls'
+            if any(word in text for word in ('sum insured', 'financial', 'value')):
+                return 'Confirm value allocation and category overlap before setting capacity or price'
+            return 'Refer this evidence for a documented underwriting decision before offering terms'
+        def briefing_label(item):
+            text = f'{item.title} {item.statement}'.casefold()
+            if any(word in text for word in ('condition', 'deteriorat', 'settlement', 'roof')):
+                return 'Property condition'
+            if any(word in text for word in ('drainage', 'pump', 'flood defense', 'flood barrier')):
+                return 'Flood protection'
+            if any(word in text for word in ('claim', 'flood history', 'historical')):
+                return 'Loss experience'
+            if any(word in text for word in ('inventory', 'machinery', 'business interruption')):
+                return 'Industrial exposure'
+            if any(word in text for word in ('sum insured', 'financial', 'value')):
+                return 'Financial exposure'
+            return 'Underwriting evidence'
+        fallback = AnalysisNarrative(
+            summary=[NarrativeSelection(finding_id=item.id, explanation=implication(item)) for item in eligible[:3]]
+                    or [NarrativeSelection(finding_id=next(iter(known)), explanation='Refer the submission until the required evidence is complete')],
+            drivers=[NarrativeSelection(finding_id=item.id, explanation=implication(item)) for item in eligible[:3]], actions=[])
         narrative = fallback
         try:
             async with asyncio.timeout(self.settings.llm_timeout_seconds):
@@ -299,7 +329,7 @@ class UnderwritingAnalysisService:
             fact = known[item.finding_id]
             # Keep the briefing interpretive. Detailed source facts remain available
             # through the cited finding instead of being copied into the summary.
-            title = re.sub(r'(?<!\d)[.!?]|[.!?](?!\d)', '', fact.title).strip()
+            title = briefing_label(fact)
             sentences.append(f'{title}: {item.explanation.rstrip(".!?")}.')
         actions = [RecommendedAction(action=item.action, rationale=item.rationale, origin='independent_analysis', citation_ids=known[item.finding_id].citation_ids) for item in narrative.actions]
         actions.extend(proposals)
@@ -309,7 +339,41 @@ class UnderwritingAnalysisService:
                 actions.append(RecommendedAction(action='Verify or obtain the referenced information before relying on model or coverage conclusions.', rationale=item.message, origin='independent_analysis', citation_ids=item.citation_ids))
         actions = list({(item.action.casefold(), item.rationale.casefold(), item.origin): item
                         for item in actions}.values())
-        return UnderwritingAnalysis(risk_summary=' '.join(sentences), risk_level=RiskLevel(source='No approved risk-rating framework output is available'), top_risk_drivers=drivers, historical_claims_findings=history, model_findings=model_findings, recommended_actions=actions, limitations=limitations, citations=list(citations.values()))
+        limitation_codes = {item.code for item in limitations}
+        conditions = []
+        driver_text = ' '.join(f'{item.title} {item.statement}' for item in eligible).casefold()
+        if any(word in driver_text for word in ('condition', 'deteriorat', 'settlement', 'roof')):
+            conditions.append('Require an independent structural report and completed remediation for deteriorated buildings before accepting flood cover.')
+        if any(word in driver_text for word in ('drainage', 'pump', 'flood defense', 'flood barrier')):
+            conditions.append('Verify drainage, pumping capacity and flood barriers on site before accepting the proposed protection measures.')
+        if any(word in driver_text for word in ('claim', 'flood history', 'historical')):
+            conditions.append('Review the complete flood-loss history and evidence that repeat-loss controls have been implemented.')
+        if limitation_codes & {'missing_coordinates', 'missing_building_model_inputs', 'hazard_coverage_unverified', 'missing_hazard_coverage'}:
+            conditions.append('Obtain verified coordinates for each insured building and confirm flood-raster coverage.')
+        if limitation_codes & {'missing_insured_value', 'coverage_ambiguity', 'financial_overlap_unverified'}:
+            conditions.append('Agree per-building insured values and clarify the relationship between property, machinery, stock and interruption limits.')
+        if 'vulnerability_assumptions_unverified' in limitation_codes:
+            conditions.append('Confirm the construction class and vulnerability basis for each building.')
+        if 'industrial_parameters_unknown' in limitation_codes:
+            conditions.append('Set separate protection requirements and sublimits for machinery, inventory, contents and business interruption.')
+        if 'document_contradiction' in limitation_codes or any(doc.contradictions for doc in documents):
+            conditions.append('Resolve contradictory document statements before terms are bound.')
+        if not model_findings:
+            conditions.append('Complete the catastrophe-model run before setting flood price or final capacity.')
+        conditions = list(dict.fromkeys(conditions))[:8]
+        decision = UnderwritingDecision(
+            recommendation='refer' if conditions or drivers else 'accept_with_conditions',
+            binding_status='not_ready_to_quote' if conditions else 'ready_to_quote',
+            rationale=('Refer for senior underwriting review because material risk evidence is present, '
+                       'but catastrophe pricing and final capacity are not supportable until the listed conditions are resolved.')
+                      if conditions else 'The validated evidence supports progressing to quotation subject to the stated controls.',
+            conditions=conditions)
+        if not any(item.origin == 'independent_analysis' for item in actions):
+            citation_ids = next((item.citation_ids for item in limitations if item.citation_ids), [validation_id])
+            actions = [RecommendedAction(action=condition,
+                rationale='Required to move the submission from referral toward a supportable quotation.',
+                origin='independent_analysis', citation_ids=citation_ids) for condition in conditions] + actions
+        return UnderwritingAnalysis(risk_summary=' '.join(sentences), risk_level=RiskLevel(source='No approved risk-rating framework output is available'), underwriting_decision=decision, top_risk_drivers=drivers, historical_claims_findings=history, model_findings=model_findings, recommended_actions=actions, limitations=limitations, citations=list(citations.values()))
 
     @staticmethod
     def _validate_narrative(narrative, known):

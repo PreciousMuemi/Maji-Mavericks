@@ -59,9 +59,19 @@ class RiskLevel(StrictModel):
     source: str
 
 
+class UnderwritingDecision(StrictModel):
+    recommendation: Literal['accept', 'accept_with_conditions', 'refer', 'decline']
+    binding_status: Literal['ready_to_quote', 'not_ready_to_quote']
+    rationale: str = Field(min_length=1)
+    conditions: list[str] = Field(default_factory=list, max_length=8)
+
+
 class UnderwritingAnalysis(StrictModel):
     risk_summary: str = Field(min_length=1)
     risk_level: RiskLevel
+    underwriting_decision: UnderwritingDecision = Field(default_factory=lambda: UnderwritingDecision(
+        recommendation='refer', binding_status='not_ready_to_quote',
+        rationale='A current underwriting disposition has not yet been generated.'))
     top_risk_drivers: list[RiskDriver] = Field(max_length=3)
     historical_claims_findings: list[IntelligenceFinding]
     model_findings: list[IntelligenceFinding]

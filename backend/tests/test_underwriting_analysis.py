@@ -170,7 +170,9 @@ async def test_empty_assessment_and_unavailable_llm_return_strict_partial_json(s
 def test_sync_entry_point_and_authorized_api(services):
     assessment = build_document(services.store)
     result = generate_underwriting_analysis(assessment, store=services.store, llm=services.extraction.llm)
-    assert set(result) == {'risk_summary', 'risk_level', 'top_risk_drivers', 'historical_claims_findings', 'model_findings', 'recommended_actions', 'limitations', 'citations'}
+    assert set(result) == {'risk_summary', 'risk_level', 'underwriting_decision', 'top_risk_drivers', 'historical_claims_findings', 'model_findings', 'recommended_actions', 'limitations', 'citations'}
+    assert result['underwriting_decision']['recommendation'] == 'refer'
+    assert result['underwriting_decision']['binding_status'] == 'not_ready_to_quote'
     application = create_app(services.settings, services)
     principal = {'subject': 'alice'}
     application.dependency_overrides[get_principal] = lambda: Principal(subject=principal['subject'])
