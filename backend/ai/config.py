@@ -1,17 +1,19 @@
 from typing import Literal
-from pydantic import Field, SecretStr
+from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="NZOIA_", env_file=".env", extra="ignore")
-    llm_provider: Literal["openai", "gemini", "openrouter"] = "openai"
+    llm_provider: Literal["openai", "gemini", "openrouter", "anthropic"] = "openai"
     llm_model: str | None = None
     openai_api_key: SecretStr | None = None
     gemini_api_key: SecretStr | None = None
     openrouter_api_key: SecretStr | None = None
+    anthropic_api_key: SecretStr | None = None
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
     llm_timeout_seconds: float = Field(default=60, gt=0, le=300)
+    llm_max_output_tokens: int = Field(default=32_768, ge=1_024, le=128_000)
     max_upload_bytes: int = Field(default=10_000_000, gt=0)
     max_document_characters: int = Field(default=150_000, gt=0)
     max_archive_uncompressed_bytes: int = Field(default=50_000_000, gt=0)
@@ -26,3 +28,9 @@ class Settings(BaseSettings):
     api_token: SecretStr | None = None
     storage_directory: str = ".nzoia-data"
     dataset_directory: str = "../datasets"
+
+    @field_validator("llm_provider", mode="before")
+    @classmethod
+    def normalize_llm_provider(cls, value: object) -> object:
+        """Accept human-friendly provider casing from shell and deployment config."""
+        return value.strip().lower() if isinstance(value, str) else value

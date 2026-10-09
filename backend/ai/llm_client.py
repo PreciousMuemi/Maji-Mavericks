@@ -118,6 +118,91 @@ class OpenRouterClient(OpenAIClient):
             for t in message.tool_calls or []])
 
 
+class AnthropicClient:
+    """Direct Claude adapter with native structured output and client tools."""
+    def __init__(self, settings: Settings):
+        from anthropic import AsyncAnthropic
+        if not settings.anthropic_api_key:
+            raise LLMUnavailable("Anthropic credentials are not configured")
+        self.client = AsyncAnthropic(
+            api_key=settings.anthropic_api_key.get_secret_value(),
+            timeout=settings.llm_timeout_seconds,
+            max_retries=2,
+        )
+        self.model = settings.llm_model or 'claude-haiku-5-5'
+        self.max_output_tokens = settings.llm_max_output_tokens
+
+    async def structured(self, system, user, schema):
+        result = await self.client.messages.create(
+            model=self.model,
+            max_tokens=self.max_output_tokens,
+            system=system,
+            messages=[{'role': 'user', 'content': user}],
+            output_config={'format': {
+                'type': 'json_schema',
+                'schema': _provider_schema(schema),
+            }},
+        )
+        content = ''.join(block.text for block in result.content
+                          if getattr(block, 'type', None) == 'text')
+        if not content.strip():
+            raise ValueError('Anthropic did not return schema-valid output')
+        return schema.model_validate_json(content)
+
+    @staticmethod
+    def _messages(messages):
+        converted, system_parts = [], []
+        for message in messages:
+            role = message['role']
+            if role == 'system':
+                system_parts.append(message.get('content') or '')
+                continue
+            if role == 'tool':
+                converted.append({'role': 'user', 'content': [{
+                    'type': 'tool_result',
+                    'tool_use_id': message['tool_call_id'],
+                    'content': message.get('content') or '',
+                }]})
+                continue
+            if role == 'assistant' and message.get('tool_calls'):
+                blocks = []
+                if message.get('content'):
+                    blocks.append({'type': 'text', 'text': message['content']})
+                blocks.extend({
+                    'type': 'tool_use',
+                    'id': call['id'],
+                    'name': call['function']['name'],
+                    'input': json.loads(call['function']['arguments']),
+                } for call in message['tool_calls'])
+                converted.append({'role': 'assistant', 'content': blocks})
+            else:
+                converted.append({'role': role, 'content': message.get('content') or ' '})
+        return '\n\n'.join(part for part in system_parts if part), converted
+
+    async def chat(self, messages, tools):
+        system, converted = self._messages(messages)
+        anthropic_tools = [{
+            'name': tool['function']['name'],
+            'description': tool['function'].get('description', ''),
+            'input_schema': tool['function']['parameters'],
+        } for tool in tools]
+        result = await self.client.messages.create(
+            model=self.model,
+            max_tokens=min(self.max_output_tokens, 8_192),
+            system=system,
+            messages=converted,
+            **({'tools': anthropic_tools} if anthropic_tools else {}),
+        )
+        text = ''.join(block.text for block in result.content
+                       if getattr(block, 'type', None) == 'text')
+        calls = [ToolCall(id=block.id, name=block.name, arguments=dict(block.input))
+                 for block in result.content if getattr(block, 'type', None) == 'tool_use']
+        return LLMResponse(text=text, tool_calls=calls)
+
+    async def aclose(self):
+        await self.client.close()
+
+
 class GeminiClient:
     def __init__(self, settings: Settings):
         from google import genai
@@ -172,9 +257,10 @@ class UnconfiguredClient:
 
 def create_llm_client(settings: Settings) -> LLMClient:
     keys = {'openai': settings.openai_api_key, 'gemini': settings.gemini_api_key,
-            'openrouter': settings.openrouter_api_key}
+            'openrouter': settings.openrouter_api_key, 'anthropic': settings.anthropic_api_key}
     key = keys[settings.llm_provider]
     if not key:
         return UnconfiguredClient()
-    clients = {'openai': OpenAIClient, 'gemini': GeminiClient, 'openrouter': OpenRouterClient}
+    clients = {'openai': OpenAIClient, 'gemini': GeminiClient,
+               'openrouter': OpenRouterClient, 'anthropic': AnthropicClient}
     return clients[settings.llm_provider](settings)

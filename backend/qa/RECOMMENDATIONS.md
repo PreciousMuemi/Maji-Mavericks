@@ -5,18 +5,18 @@
 Make the upload-to-underwriting-report workflow dependable for unfamiliar insurance
 documents while preserving strict source evidence and never accepting invented values.
 
-## 1. Replace the free extraction model
+## 1. Use the direct Claude extraction provider
 
 Do not depend on a free OpenRouter model for the primary document-extraction path.
-Free endpoints have variable queues, timeouts and structured-output reliability.
+The backend now includes a direct Anthropic adapter with structured output and tools.
 
-Use the existing OpenRouter API key with a low-cost model that supports strict JSON
-Schema output and tool calling. The recommended initial configuration is:
+Use an Anthropic API key with this initial configuration:
 
 ```env
-NZOIA_LLM_PROVIDER=openrouter
-NZOIA_LLM_MODEL=openai/gpt-oss-120b
+NZOIA_LLM_PROVIDER=anthropic
+NZOIA_LLM_MODEL=claude-haiku-5-5
 NZOIA_LLM_TIMEOUT_SECONDS=180
+NZOIA_LLM_MAX_OUTPUT_TOKENS=32768
 ```
 
 Model availability, capabilities and prices must be checked before deployment. The
@@ -126,7 +126,7 @@ to establish reliability.
 
 The project owner should provide:
 
-- OpenRouter credit and the configured API key.
+- Anthropic API access and the configured API key.
 - Access details for the trained model when available.
 - Representative anonymized insurance reports.
 - Confirmation of supported document formats and maximum sizes.
@@ -137,7 +137,7 @@ API keys must remain in `backend/.env` and must never be committed or shared in 
 
 ## Recommended implementation order
 
-1. Fund OpenRouter and configure a dependable structured-output model.
+1. Add the Anthropic key and validate Claude structured extraction repeatedly.
 2. Implement parser-segment evidence binding.
 3. Split extraction into independently validated categories.
 4. Move extraction to a background job with visible progress.

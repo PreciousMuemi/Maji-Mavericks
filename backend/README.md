@@ -19,14 +19,16 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
 
 Visit `/docs` for the API schema. Configuration loads from environment variables and
-`.env` in the current working directory. Use `NZOIA_LLM_PROVIDER=openai`, `gemini`
-or `openrouter`, with the matching `NZOIA_*_API_KEY`. OpenRouter supports
+`.env` in the current working directory. Use `NZOIA_LLM_PROVIDER=anthropic`, `openai`,
+`gemini` or `openrouter`, with the matching `NZOIA_*_API_KEY`. Anthropic uses the
+direct Claude Messages API with native structured output and tool use. OpenRouter supports
 capability-aware routing; the local demo pins a free structured-output/tool model
 to avoid inconsistent schema support from a rotating router. `NZOIA_LLM_MODEL` overrides
 the adapter default. Secrets use Pydantic SecretStr. Missing credentials allow
 startup and parsing/validation; LLM calls return 503. Provider schema failures or
 outages return sanitized errors, never exception messages or request content.
-OpenAI and OpenRouter structured extraction use the SDK Pydantic parse helper; Gemini
+OpenAI and OpenRouter structured extraction use their structured-output APIs; Anthropic
+uses `output_config.format` with local Pydantic validation, and Gemini
 uses a response schema plus local validation. Both adapters expose the same
 `structured` and `chat` methods. Gemini preserves native tool response parts.
 

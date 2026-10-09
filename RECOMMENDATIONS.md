@@ -27,9 +27,8 @@ model integrations so that each teammate knows what they need to provide.
 The uploaded file is normally accepted and parsed. The visible failure occurs during
 the next step: rich AI extraction.
 
-The current configuration uses the free OpenRouter model
-`nvidia/nemotron-3-super-120b-a12b:free`. Free inference has variable queueing and
-structured-output reliability. On the supplied PDF it has exhibited the following:
+The previous configuration used the free OpenRouter model
+`nvidia/nemotron-3-super-120b-a12b:free`. During testing, free inference exhibited:
 
 - requests exceeding the configured timeout;
 - responses with no usable `choices`;
@@ -43,24 +42,25 @@ unsupported insurance values into an underwriting report.
 
 ## Recommended immediate model configuration
 
-Use a paid, low-cost OpenRouter model that advertises structured output and tool support.
-The recommended starting point is:
+Use Anthropic's direct Claude API with native structured output and tool support. The
+configured starting point is:
 
 ```env
-NZOIA_LLM_PROVIDER=openrouter
-NZOIA_LLM_MODEL=openai/gpt-oss-120b
+NZOIA_LLM_PROVIDER=anthropic
+NZOIA_LLM_MODEL=claude-haiku-5-5
 NZOIA_LLM_TIMEOUT_SECONDS=180
+NZOIA_LLM_MAX_OUTPUT_TOKENS=32768
 ```
 
-Keep the OpenRouter API key only in `backend/.env`:
+Keep the Anthropic API key only in `backend/.env`:
 
 ```env
-NZOIA_OPENROUTER_API_KEY=replace-with-the-real-key
+NZOIA_ANTHROPIC_API_KEY=replace-with-the-real-key
 ```
 
 Never commit `backend/.env` or paste its key into issues, documentation or chat.
-OpenRouter model availability and pricing can change, so confirm the selected model's
-current structured-output and tool capabilities before the demonstration.
+Confirm that the Anthropic account can access the configured model, then run repeated
+live extraction tests before the demonstration.
 
 Restart the service after changing the configuration:
 

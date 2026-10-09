@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 from ai.config import Settings
-from ai.llm_client import GeminiClient, OpenAIClient, OpenRouterClient, UnconfiguredClient, _provider_schema, create_llm_client
+from ai.llm_client import AnthropicClient, GeminiClient, OpenAIClient, OpenRouterClient, UnconfiguredClient, _provider_schema, create_llm_client
 from ai.schemas import DocumentExtraction
 from ai.insurance_schemas import InsuranceFacts
 
@@ -101,6 +101,56 @@ def test_openrouter_schema_removes_unsupported_decimal_lookaround_only():
 
 
 @pytest.mark.asyncio
+async def test_anthropic_structured_output_and_tool_translation():
+    client = AnthropicClient.__new__(AnthropicClient)
+    client.model = 'claude-test'
+    client.max_output_tokens = 32768
+    create = AsyncMock(return_value=SimpleNamespace(content=[SimpleNamespace(
+        type='text', text=DocumentExtraction().model_dump_json())]))
+    client.client = SimpleNamespace(messages=SimpleNamespace(create=create))
+
+    assert await client.structured('system', 'document', DocumentExtraction) == DocumentExtraction()
+    call = create.call_args.kwargs
+    assert call['system'] == 'system'
+    assert call['output_config']['format']['type'] == 'json_schema'
+
+    create.return_value = SimpleNamespace(content=[
+        SimpleNamespace(type='text', text='Checking the assessment.'),
+        SimpleNamespace(type='tool_use', id='tool1', name='get_assessment',
+                        input={'assessment_id': 'assessment-1'}),
+    ])
+    result = await client.chat(
+        [{'role': 'system', 'content': 'system'}, {'role': 'user', 'content': 'review'}],
+        [{'type': 'function', 'function': {'name': 'get_assessment',
+          'description': 'Get assessment', 'parameters': {'type': 'object'}}}],
+    )
+    assert result.text == 'Checking the assessment.'
+    assert result.tool_calls[0].arguments == {'assessment_id': 'assessment-1'}
+    assert create.call_args.kwargs['tools'][0]['input_schema'] == {'type': 'object'}
+
+
+def test_anthropic_replays_tool_results_in_native_message_blocks():
+    system, messages = AnthropicClient._messages([
+        {'role': 'system', 'content': 'policy'},
+        {'role': 'assistant', 'content': '', 'tool_calls': [{
+            'id': 'tool1', 'function': {'name': 'get_assessment', 'arguments': '{}'}}]},
+        {'role': 'tool', 'tool_call_id': 'tool1', 'name': 'get_assessment',
+         'content': '{"status":"success"}'},
+    ])
+    assert system == 'policy'
+    assert messages[0]['content'][0]['type'] == 'tool_use'
+    assert messages[1]['content'][0]['type'] == 'tool_result'
+    assert messages[1]['content'][0]['tool_use_id'] == 'tool1'
+
+
+def test_anthropic_factory_uses_current_haiku_by_default():
+    settings = Settings(_env_file=None, llm_provider='anthropic',
+                        anthropic_api_key='test-key', llm_model=None)
+    client = create_llm_client(settings)
+    assert isinstance(client, AnthropicClient)
+    assert client.model == 'claude-haiku-5-5'
+
+@pytest.mark.asyncio
 async def test_gemini_replays_native_signed_content():
     from google.genai import types
     client = GeminiClient.__new__(GeminiClient)
@@ -114,3 +164,7 @@ async def test_gemini_replays_native_signed_content():
     await client.chat([{'role': 'system', 'content': 'system'}, {'role': 'assistant', '_provider_metadata': result.provider_metadata}, {'role': 'tool', 'name': 'get_exposures', 'content': '{"status":"success","data":{}}'}], [])
     assert generate.call_args.kwargs['contents'][0].parts[0].thought_signature == b'signature'
     assert generate.call_args.kwargs['config'].automatic_function_calling.disable
+def test_provider_name_is_case_insensitive():
+    settings = Settings(_env_file=None, llm_provider="Anthropic")
+
+    assert settings.llm_provider == "anthropic"
